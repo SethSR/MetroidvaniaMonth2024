@@ -26,9 +26,21 @@
 	- Being hit by the wrong polarity stuns you, forcing you to fall.
 		- No input would work for some time
 		- either a second or so to allow you to recover, or until you hit the ground?
+- Screen clear
+	- Single use bomb that wipes all projectiles from the screen
+	- Optional upgrades increases bomb count
+	- Bombs only recharge at save rooms
+
+# Level Construction
+
+- Grid based, possibly using godot's TileMap
+- Moving Platforms
+	- Moving actor type, attached to spline
+	- Linear only, or do we allow cycles?
 
 # Story Outline
 
+- Crash land on an inhabited planet
 - Start as a small orb-like robot head
 	- Slow movement
 	- climb/crawl through vents
@@ -40,3 +52,46 @@
 	- full-speed movement
 	- ground & air dash
 	- double jump from legs and jet-pack
+- Escape the planet
+
+# Tasks
+
+- Test level
+- Camera movement
+- Character movement
+- Enemy AI / movement
+- Environment behaviors
+- Collision layers
+- Room transitions
+- Enemy types
+- Main Menu UI
+- Game Menu UI
+- HUD UI(?)
+- Art
+	- character head
+	- character torso / arms
+	- character legs
+	- defense turret side
+	- defense turret diagonal
+	- defense turret up / down
+	- mining laser (blocks? turrets?)
+	- defense lasers
+	- internal tiles
+		- ceiling
+		- walls
+		- doors
+		- decoration
+	- scaffold tiles
+	- external tiles(?)
+		- walls
+		- doors
+- Sound Effects
+	- lasers
+	- turret shots
+	- character walk
+	- character jump
+	- character dash
+	- character grapple
+	- menu movement
+	- menu accept
+	- menu reject
