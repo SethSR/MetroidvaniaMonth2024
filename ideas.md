@@ -14,7 +14,7 @@
 	- Shoots in a straight line with a maximum range
 	- four or eight directional
 	- Primarily used as a substitute for a ranged weapon, for puzzles before platforming
-	- Ideas:
+	- Ideas
 		- Grapple does not auto pull, character stops falling / freezes in place, can press a second button to pull itself towards the grapple point, or jump
 		- Different grapple points have different effects, such as a charged point resetting your dash charges, a hackable point moving an object in the world
 - "Ikaruga" shield

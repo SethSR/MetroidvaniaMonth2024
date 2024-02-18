@@ -36,24 +36,24 @@ var jump_charges: int = 0
 
 @onready var animation: AnimatedSprite2D = $PlayerSprite
 
-func ready():
+func ready() -> void:
 	dash_timer = 0
 	dash_charges = get_max_dash_charges()
 	jump_charges = get_max_jump_charges()
 	movement_state = MovementState.FALLING
 
 #todo: get from unlocks system
-func get_max_dash_charges():
+func get_max_dash_charges() -> int:
 	return 1
-	
-func get_max_jump_charges():
+
+func get_max_jump_charges() -> int:
 	return 1
-	
-func process_input():
+
+func process_input() -> void:
 	input_vector = Vector2.ZERO
 	wants_jump = false
 	wants_dash = false
-	
+
 	if Input.is_action_pressed("move_left"):
 		input_vector.x -= 1
 	if Input.is_action_pressed("move_right"):
@@ -64,11 +64,11 @@ func process_input():
 		wants_jump = true
 	if Input.is_action_pressed("grapple"):
 		wants_grapple = true
-	
-	# no need to normalize input_vector, since we only account for left and right. 
+
+	# no need to normalize input_vector, since we only account for left and right.
 	# if we want multidirectional dash we probably still don't want to normalize tbh
 	#input_vector = input_vector.normalized()
-	
+
 #################### state transitions
 func try_transition_to_jump() -> bool:
 	if wants_jump and jump_charges > 0:
@@ -78,7 +78,7 @@ func try_transition_to_jump() -> bool:
 		return true
 	else:
 		return false
-		
+
 func try_transition_to_dash() -> bool:
 	if wants_dash and dash_charges > 0 and abs(input_vector.x) > 0:
 		movement_state = MovementState.DASHING
@@ -97,7 +97,7 @@ func try_transition_to_falling() -> bool:
 		return true
 	else:
 		return false
-		
+
 func try_transition_to_walking() -> bool:
 	if is_on_floor() and dash_timer == 0:
 		movement_state = MovementState.WALKING
@@ -107,9 +107,9 @@ func try_transition_to_walking() -> bool:
 		return true
 	else:
 		return false
-		
-		
-func try_state_transitions():
+
+
+func try_state_transitions() -> void:
 	match movement_state:
 		MovementState.FALLING:
 			if try_transition_to_jump():
@@ -143,61 +143,61 @@ func try_state_transitions():
 		MovementState.STUNNED:
 			movement_state = MovementState.FALLING
 		MovementState.GRAPPLE:
-			movement_state = MovementState.FALLING	
+			movement_state = MovementState.FALLING
 
 #################### physics functions
-func apply_gravity(delta: float, gravity: float):
+func apply_gravity(delta: float, gravity: float) -> void:
 	velocity.y = move_toward(velocity.y, FALLING_TERMINAL_VELOCITY, gravity * delta)
 
-func apply_friction(friction: float):
+func apply_friction(friction: float) -> void:
 	velocity.x = move_toward(velocity.x, 0, friction)
 
-func apply_acceleration(delta: float, max_speed: float, acceleration: float):
+func apply_acceleration(delta: float, max_speed: float, acceleration: float) -> void:
 	velocity.x = move_toward(velocity.x, input_vector.x * max_speed, acceleration * delta)
 
 
-func physics_falling(delta: float):
+func physics_falling(delta: float) -> void:
 	apply_gravity(delta, FALLING_GRAVITY)
 	if is_equal_approx(input_vector.x, 0.0) or input_vector.x * velocity.x < 0:
-		apply_friction(AIR_FRICTION) 
+		apply_friction(AIR_FRICTION)
 	if abs(velocity.x) > AIR_MAX_HORIZONTAL_SPEED:
 		apply_friction(EXCESS_SPEED_FRICTION)
 	apply_acceleration(delta, AIR_MAX_HORIZONTAL_SPEED, AIR_HORIZONTAL_ACCELERATION)
 
-func physics_walking(delta: float):
+func physics_walking(delta: float) -> void:
 	if is_equal_approx(input_vector.x, 0.0) or input_vector.x * velocity.x < 0:
-		apply_friction(WALKING_FRICTION) 
+		apply_friction(WALKING_FRICTION)
 	if abs(velocity.x) > WALKING_MAX_SPEED:
 		apply_friction(EXCESS_SPEED_FRICTION)
 	apply_acceleration(delta, WALKING_MAX_SPEED, WALKING_ACCELERATION)
 	#todo: coyote time
 
 #todo
-func physics_dashing(delta: float):
+func physics_dashing(delta: float) -> void:
 	apply_friction(DASH_FRICTION)
 	if not is_on_floor():
 		apply_gravity(delta, DASH_GRAVITY)
-	
+
 #todo
-func physics_jumping(delta: float):
+func physics_jumping(delta: float) -> void:
 	apply_gravity(delta, JUMP_GRAVITY)
 	if is_equal_approx(input_vector.x, 0.0) or input_vector.x * velocity.x < 0:
-		apply_friction(AIR_FRICTION) 
+		apply_friction(AIR_FRICTION)
 	if abs(velocity.x) > AIR_MAX_HORIZONTAL_SPEED:
 		apply_friction(EXCESS_SPEED_FRICTION)
 	apply_acceleration(delta, AIR_MAX_HORIZONTAL_SPEED, AIR_HORIZONTAL_ACCELERATION)
 	pass
 
 #todo
-func physics_stunned(delta: float):
+func physics_stunned(_delta: float) -> void:
 	pass
-	
+
 #todo
-func physics_grapple(delta: float):
+func physics_grapple(_delta: float) -> void:
 	pass
-	
+
 #todo:
-func update_velocity(delta: float):
+func update_velocity(delta: float) -> void:
 	match movement_state:
 		MovementState.FALLING:
 			physics_falling(delta)
@@ -212,32 +212,33 @@ func update_velocity(delta: float):
 		MovementState.GRAPPLE:
 			physics_grapple(delta)
 
-func update_timers(delta: float):
+func update_timers(delta: float) -> void:
 	if dash_timer > 0:
 		dash_timer = clamp(dash_timer - delta, 0, 100000.0)
-	
+
 #todo:
-func update_animations():
+func update_animations() -> void:
 	if abs(velocity.x) > 0 and abs(input_vector.x) > 0:
 		animation.play("walk")
 	else:
 		animation.play("idle")
-	
-	var percent_max_speed = abs(velocity.x) / WALKING_MAX_SPEED #todo: this only applies to walking
+
+	var percent_max_speed: float = abs(velocity.x) / WALKING_MAX_SPEED #todo: this only applies to walking
 	animation.speed_scale = clamp(lerp(0.0, 1.0, percent_max_speed), 0.0, 1.0)
 	animation.flip_h = input_vector.x < 0
 
 #todo:
-func update_sounds():
+func update_sounds() -> void:
 	return
 
-func _physics_process(delta):
+func _physics_process(delta: float) -> void:
 	process_input()
-	
+
 	try_state_transitions()
 	update_velocity(delta)
+	@warning_ignore("return_value_discarded")
 	move_and_slide()
-	
+
 	update_timers(delta)
 	update_animations()
 	update_sounds()
