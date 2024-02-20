@@ -19,9 +19,11 @@ enum MovementState {FALLING, WALKING, JUMPING, DASHING, GRAPPLE, STUNNED}
 @export var DASH_GRAVITY: float = 50.0
 @export var DASH_FRICTION: float = 0.8
 
-@export var JUMP_VELOCITY: float = 200.0
-@export var JUMP_GRAVITY: float = 580.0
-@export var JUMP_FORCE_DURATION: float = 0.28
+@export var JUMP_VELOCITY: float = 280.0
+@export var JUMP_GRAVITY: float = 980.0
+@export var JUMP_FORCE_DURATION: float = 0.19
+
+@export var GRAPPLE_LENGTH: float = 80.0
 
 @export var EXCESS_SPEED_FRICTION: float = 3.0
 
@@ -39,9 +41,14 @@ var dash_timer: float = 0.0
 var dash_current_direction: float = 0.0
 var dash_charges: int = 0
 
+var grapple_current_length: float = 0.0
+var grapple_anchor_point: Vector2 = Vector2.ZERO
+
 var coyote_timer: float = 0.0
+var is_facing_right: bool = true
 
 @onready var animation: AnimatedSprite2D = $PlayerSprite
+@onready var grapple_vfx: Sprite2D = $GrappleVfx
 
 func ready() -> void:
 	dash_timer = 0.0
@@ -50,6 +57,7 @@ func ready() -> void:
 	dash_charges = get_max_dash_charges()
 	jump_charges = get_max_jump_charges()
 	movement_state = MovementState.FALLING
+	grapple_vfx.visible = false
 
 #todo: get from unlocks system
 func get_max_dash_charges() -> int:
@@ -62,8 +70,13 @@ func process_input() -> void:
 	wants_jump = false
 	released_jump = false
 	wants_dash = false
+	wants_grapple = false
 
 	input_vector.x = Input.get_axis("move_left", "move_right")
+	if input_vector.x < 0:
+		is_facing_right = false
+	elif input_vector.x > 0:
+		is_facing_right = true
 
 	if Input.is_action_just_pressed("dash"):
 		wants_dash = true
@@ -71,7 +84,7 @@ func process_input() -> void:
 		wants_jump = true
 	if Input.is_action_just_released("jump"):
 		released_jump = true
-	if Input.is_action_pressed("grapple"):
+	if Input.is_action_just_pressed("grapple"):
 		wants_grapple = true
 
 func update_debug_label() -> void:
@@ -129,6 +142,14 @@ func try_transition_to_walking() -> bool:
 	else:
 		return false
 
+func try_transition_to_grapple() -> bool:
+	if grapple_current_length > 0:
+		movement_state = MovementState.GRAPPLE
+		dash_charges = get_max_dash_charges()
+		jump_charges = get_max_jump_charges()
+		return true
+	else:
+		return false
 
 func try_state_transitions() -> void:
 	match movement_state:
@@ -139,10 +160,14 @@ func try_state_transitions() -> void:
 				return
 			elif try_transition_to_walking():
 				return
+			elif try_transition_to_grapple():
+				return
 		MovementState.WALKING:
 			if try_transition_to_jump():
 				return
 			elif try_transition_to_dash():
+				return
+			elif try_transition_to_grapple():
 				return
 			elif coyote_timer <= 0.0:
 				try_transition_to_falling()
@@ -150,6 +175,8 @@ func try_state_transitions() -> void:
 			if try_transition_to_dash():
 				return
 			elif try_transition_to_jump():
+				return
+			elif try_transition_to_grapple():
 				return
 			elif try_transition_to_falling():
 				return
@@ -161,10 +188,18 @@ func try_state_transitions() -> void:
 					return
 				elif try_transition_to_walking():
 					return
+			elif try_transition_to_grapple():
+				return
 		MovementState.STUNNED:
 			movement_state = MovementState.FALLING
 		MovementState.GRAPPLE:
-			movement_state = MovementState.FALLING
+			if try_transition_to_jump():
+				grapple_current_length = 0.0
+			elif try_transition_to_dash():
+				grapple_current_length = 0.0
+			elif wants_grapple:
+				grapple_current_length = 0.0
+				movement_state = MovementState.FALLING
 
 #################### physics functions
 func apply_gravity(delta: float, gravity: float) -> void:
@@ -222,7 +257,7 @@ func physics_stunned(_delta: float) -> void:
 
 #todo
 func physics_grapple(_delta: float) -> void:
-	pass
+	velocity = Vector2.ZERO
 
 #todo:
 func update_velocity(delta: float) -> void:
@@ -257,7 +292,11 @@ func update_animations() -> void:
 
 	var percent_max_speed: float = abs(velocity.x) / WALKING_MAX_SPEED #todo: this only applies to walking
 	animation.speed_scale = clamp(lerp(0.0, 1.0, percent_max_speed), 0.0, 1.0)
-	animation.flip_h = input_vector.x < 0.0
+	animation.flip_h = !is_facing_right
+
+	if movement_state == MovementState.GRAPPLE:
+		grapple_vfx.region_rect.size.x = grapple_current_length
+		grapple_vfx.position.x = grapple_current_length / 2.0
 
 #todo:
 func update_sounds() -> void:
@@ -271,6 +310,19 @@ func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 	if was_on_floor == true and is_now_on_floor == false:
 		coyote_timer = WALKING_COYOTE_TIME_DURATION
 
+func check_grapple_raycast() -> void:
+	var raycast_target: Vector2 = position
+	raycast_target.x = raycast_target.x + GRAPPLE_LENGTH if is_facing_right else raycast_target.x - GRAPPLE_LENGTH
+	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
+
+	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(position, raycast_target, 2)
+	query.exclude = [self]
+	var result: Dictionary = space_state.intersect_ray(query)
+
+	if !result.is_empty():
+		grapple_anchor_point = result.get("position")
+		grapple_current_length = position.x - grapple_anchor_point.x if position.x > grapple_anchor_point.x else grapple_anchor_point.x - position.x
+
 func _physics_process(delta: float) -> void:
 	var was_on_floor: bool = is_on_floor()
 	update_velocity(delta)
@@ -278,6 +330,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 	update_coyote_time(was_on_floor, is_on_floor())
+
+	if wants_grapple and movement_state != MovementState.GRAPPLE:
+		check_grapple_raycast()
 
 	try_state_transitions()
 
