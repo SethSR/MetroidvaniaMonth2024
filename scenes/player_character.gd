@@ -5,6 +5,7 @@ enum MovementState {FALLING, WALKING, JUMPING, DASHING, GRAPPLE, STUNNED}
 @export var WALKING_MAX_SPEED: float = 125.0
 @export var WALKING_ACCELERATION: float = 260.0
 @export var WALKING_FRICTION: float = 1.875
+@export var WALKING_COYOTE_TIME_DURATION: float = 0.06
 
 @export var AIR_MAX_HORIZONTAL_SPEED: float = 125.0
 @export var AIR_HORIZONTAL_ACCELERATION: float = 200.0
@@ -38,10 +39,14 @@ var dash_timer: float = 0.0
 var dash_current_direction: float = 0.0
 var dash_charges: int = 0
 
+var coyote_timer: float = 0.0
+
 @onready var animation: AnimatedSprite2D = $PlayerSprite
 
 func ready() -> void:
 	dash_timer = 0.0
+	jump_timer = 0.0
+	coyote_timer = 0.0
 	dash_charges = get_max_dash_charges()
 	jump_charges = get_max_jump_charges()
 	movement_state = MovementState.FALLING
@@ -54,15 +59,12 @@ func get_max_jump_charges() -> int:
 	return 1
 
 func process_input() -> void:
-	input_vector = Vector2.ZERO
 	wants_jump = false
 	released_jump = false
 	wants_dash = false
 
-	if Input.is_action_pressed("move_left"):
-		input_vector.x -= 1
-	if Input.is_action_pressed("move_right"):
-		input_vector.x += 1
+	input_vector.x = Input.get_axis("move_left", "move_right")
+
 	if Input.is_action_just_pressed("dash"):
 		wants_dash = true
 	if Input.is_action_just_pressed("jump"):
@@ -72,9 +74,17 @@ func process_input() -> void:
 	if Input.is_action_pressed("grapple"):
 		wants_grapple = true
 
+func update_debug_label() -> void:
+	var label: Label = $Label
+	label.text = "input_vector.x = " + str(input_vector.x) + "\nmove_left = " + str(Input.is_action_pressed("move_left")) + "\nmove_right = " + str(Input.is_action_pressed("move_right"))
+
 # no need to normalize input_vector, since we only account for left and right.
 # if we want multidirectional dash we probably still don't want to normalize tbh
 #input_vector = input_vector.normalized()
+
+func _process(_delta: float) -> void:
+	process_input()
+	update_debug_label()
 
 #################### state transitions
 func try_transition_to_jump() -> bool:
@@ -134,8 +144,8 @@ func try_state_transitions() -> void:
 				return
 			elif try_transition_to_dash():
 				return
-			elif try_transition_to_falling():
-				return
+			elif coyote_timer <= 0.0:
+				try_transition_to_falling()
 		MovementState.JUMPING:
 			if try_transition_to_dash():
 				return
@@ -235,6 +245,8 @@ func update_timers(delta: float) -> void:
 		dash_timer = dash_timer - delta
 	if jump_timer > 0.0:
 		jump_timer = jump_timer - delta
+	if coyote_timer > 0.0:
+		coyote_timer = coyote_timer - delta
 
 #todo:
 func update_animations() -> void:
@@ -251,12 +263,22 @@ func update_animations() -> void:
 func update_sounds() -> void:
 	return
 
-func _physics_process(delta: float) -> void:
-	process_input()
+func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
+	if movement_state != MovementState.WALKING:
+		coyote_timer = 0.0
+		return
 
+	if was_on_floor == true and is_now_on_floor == false:
+		coyote_timer = WALKING_COYOTE_TIME_DURATION
+
+func _physics_process(delta: float) -> void:
+	var was_on_floor: bool = is_on_floor()
 	update_velocity(delta)
 	@warning_ignore("return_value_discarded")
 	move_and_slide()
+
+	update_coyote_time(was_on_floor, is_on_floor())
+
 	try_state_transitions()
 
 	update_timers(delta)

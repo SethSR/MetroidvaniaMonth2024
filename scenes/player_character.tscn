@@ -98,3 +98,11 @@ offset = Vector2(0, -4)
 zoom = Vector2(3.5, 3.5)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
+
+[node name="Label" type="Label" parent="."]
+z_index = 3
+offset_left = 11.0
+offset_top = -46.0
+offset_right = 51.0
+offset_bottom = -23.0
+scale = Vector2(0.400004, 0.439999)
