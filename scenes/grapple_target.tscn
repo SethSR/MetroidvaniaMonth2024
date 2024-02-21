@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://d1bxdxammi3d3"]
+
+[ext_resource type="Texture2D" uid="uid://bmw4rgsto71a1" path="res://sprites/grapple.png" id="1_sfc0t"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0ceja"]
+
+[node name="GrappleTarget" type="StaticBody2D"]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_0ceja")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-2, 0)
+texture = ExtResource("1_sfc0t")
