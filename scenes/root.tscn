@@ -160,7 +160,7 @@ position = Vector2(6, 54)
 script = ExtResource("5_jo5nr")
 
 [node name="Turret" parent="." instance=ExtResource("7_0185x")]
-position = Vector2(504, 376)
+position = Vector2(9, 136)
 firing_lines = [false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false]
 
 [connection signal="shoot" from="Turret" to="MovementZoo" method="_on_turret_shoot"]
