@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+class_name Player
+
 enum MovementState {FALLING, WALKING, JUMPING, DASHING, GRAPPLE, STUNNED}
 
 @export var WALKING_MAX_SPEED: float = 125.0
@@ -66,12 +68,13 @@ func get_max_dash_charges() -> int:
 func get_max_jump_charges() -> int:
 	return 1
 
-func process_input() -> void:
+func reset_inputs() -> void:
 	wants_jump = false
 	released_jump = false
 	wants_dash = false
 	wants_grapple = false
 
+func process_input() -> void:
 	input_vector.x = Input.get_axis("move_left", "move_right")
 	if input_vector.x < 0:
 		is_facing_right = false
@@ -335,6 +338,7 @@ func _physics_process(delta: float) -> void:
 		check_grapple_raycast()
 
 	try_state_transitions()
+	reset_inputs()
 
 	update_timers(delta)
 	update_animations()
