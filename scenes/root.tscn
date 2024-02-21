@@ -1,10 +1,12 @@
-[gd_scene load_steps=9 format=3 uid="uid://cx5wlfv55qdrx"]
+[gd_scene load_steps=11 format=3 uid="uid://cx5wlfv55qdrx"]
 
 [ext_resource type="PackedScene" uid="uid://dfsw2b6a66csc" path="res://scenes/player_character.tscn" id="1_xgeu4"]
 [ext_resource type="Texture2D" uid="uid://bver6stddvgrp" path="res://sprites/debug_tile.png" id="2_05a1t"]
 [ext_resource type="Texture2D" uid="uid://bvysfy1jyswg8" path="res://sprites/debug_tile.tres" id="3_idpdd"]
 [ext_resource type="PackedScene" uid="uid://d1bxdxammi3d3" path="res://scenes/grapple_target.tscn" id="4_ctrva"]
 [ext_resource type="Script" path="res://scenes/grapple_target.gd" id="5_jo5nr"]
+[ext_resource type="Script" path="res://scenes/turret_controller.gd" id="6_amqwm"]
+[ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="7_0185x"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qtqhu"]
 texture = ExtResource("2_05a1t")
@@ -24,14 +26,15 @@ sources/2 = SubResource("TileSetAtlasSource_p0r2o")
 [node name="Root" type="Node"]
 
 [node name="MovementZoo" type="Node2D" parent="."]
+script = ExtResource("6_amqwm")
 
 [node name="CharacterBody2D" parent="MovementZoo" instance=ExtResource("1_xgeu4")]
-position = Vector2(145, 71)
+position = Vector2(145, 72)
 slide_on_ceiling = false
 
 [node name="TileMap" type="TileMap" parent="MovementZoo"]
 texture_filter = 1
-position = Vector2(-322, -50)
+position = Vector2(-320, -48)
 rotation = 0.000332188
 tile_set = SubResource("TileSet_o8g86")
 format = 2
@@ -147,3 +150,9 @@ text = "6"
 [node name="GrappleTarget" parent="MovementZoo" instance=ExtResource("4_ctrva")]
 position = Vector2(202, 129)
 script = ExtResource("5_jo5nr")
+
+[node name="Turret" parent="." instance=ExtResource("7_0185x")]
+position = Vector2(504, 376)
+firing_lines = [false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false]
+
+[connection signal="shoot" from="Turret" to="MovementZoo" method="_on_turret_shoot"]
