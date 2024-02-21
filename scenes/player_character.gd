@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 enum MovementState {FALLING, WALKING, JUMPING, DASHING, GRAPPLE, STUNNED}
+enum Direction {LEFT, RIGHT}
 
 @export var WALKING_MAX_SPEED: float = 125.0
 @export var WALKING_ACCELERATION: float = 260.0
@@ -24,6 +25,9 @@ enum MovementState {FALLING, WALKING, JUMPING, DASHING, GRAPPLE, STUNNED}
 @export var JUMP_FORCE_DURATION: float = 0.19
 
 @export var GRAPPLE_LENGTH: float = 80.0
+@export var GRAPPLE_MAX_SPEED: float = 20.0
+@export var GRAPPLE_ACCELERATION: float = 300
+@export var GRAPPLE_WOBBLE_LENGTH: float = 1.5
 
 @export var EXCESS_SPEED_FRICTION: float = 3.0
 
@@ -43,9 +47,14 @@ var dash_charges: int = 0
 
 var grapple_current_length: float = 0.0
 var grapple_anchor_point: Vector2 = Vector2.ZERO
+var grapple_wobble_timer: float = 0.0
+var grapple_wobble_y: float = 0.0
+var grapple_wobble_tween: Tween
+var grapple_direction: Direction = Direction.RIGHT
 
 var coyote_timer: float = 0.0
-var is_facing_right: bool = true
+var facing_direction: Direction = Direction.RIGHT
+
 
 @onready var animation: AnimatedSprite2D = $PlayerSprite
 @onready var grapple_vfx: Sprite2D = $GrappleVfx
@@ -57,7 +66,6 @@ func ready() -> void:
 	dash_charges = get_max_dash_charges()
 	jump_charges = get_max_jump_charges()
 	movement_state = MovementState.FALLING
-	grapple_vfx.visible = false
 
 #todo: get from unlocks system
 func get_max_dash_charges() -> int:
@@ -74,9 +82,9 @@ func process_input() -> void:
 
 	input_vector.x = Input.get_axis("move_left", "move_right")
 	if input_vector.x < 0:
-		is_facing_right = false
+		facing_direction = Direction.LEFT
 	elif input_vector.x > 0:
-		is_facing_right = true
+		facing_direction = Direction.RIGHT
 
 	if Input.is_action_just_pressed("dash"):
 		wants_dash = true
@@ -90,6 +98,9 @@ func process_input() -> void:
 func update_debug_label() -> void:
 	var label: Label = $Label
 	label.text = "input_vector.x = " + str(input_vector.x) + "\nmove_left = " + str(Input.is_action_pressed("move_left")) + "\nmove_right = " + str(Input.is_action_pressed("move_right"))
+
+func is_facing_right() -> bool:
+	return facing_direction == Direction.RIGHT
 
 # no need to normalize input_vector, since we only account for left and right.
 # if we want multidirectional dash we probably still don't want to normalize tbh
@@ -151,6 +162,11 @@ func try_transition_to_grapple() -> bool:
 	else:
 		return false
 
+func end_grapple_state() -> void:
+	grapple_current_length = 0.0
+	grapple_vfx.visible = false
+	grapple_wobble_tween.kill()
+
 func try_state_transitions() -> void:
 	match movement_state:
 		MovementState.FALLING:
@@ -194,11 +210,12 @@ func try_state_transitions() -> void:
 			movement_state = MovementState.FALLING
 		MovementState.GRAPPLE:
 			if try_transition_to_jump():
-				grapple_current_length = 0.0
+				velocity.y = velocity.y * 0.8 # decrease jump height when coming out of grapple
+				end_grapple_state()
 			elif try_transition_to_dash():
-				grapple_current_length = 0.0
+				end_grapple_state()
 			elif wants_grapple:
-				grapple_current_length = 0.0
+				end_grapple_state()
 				movement_state = MovementState.FALLING
 
 #################### physics functions
@@ -256,8 +273,18 @@ func physics_stunned(_delta: float) -> void:
 	pass
 
 #todo
-func physics_grapple(_delta: float) -> void:
+func physics_grapple(delta: float) -> void:
 	velocity = Vector2.ZERO
+	if grapple_current_length > GRAPPLE_LENGTH:
+		grapple_current_length = GRAPPLE_LENGTH # fix for hitting the grapple point hitbox a bit further than the max length, since the hitbox is a bit further out than the anchor point
+	if grapple_current_length <= GRAPPLE_LENGTH:
+		var direction_modifier: float = -1.0 if grapple_direction == Direction.RIGHT else 1.0
+		grapple_current_length = grapple_current_length + (GRAPPLE_MAX_SPEED * delta * input_vector.x * direction_modifier)
+		grapple_current_length = clamp(grapple_current_length, 8.0, GRAPPLE_LENGTH)
+		var grapple_offset: float = grapple_current_length * direction_modifier
+		position.x = grapple_anchor_point.x + grapple_offset
+		if grapple_wobble_tween.is_running():
+			position.y = grapple_wobble_y
 
 #todo:
 func update_velocity(delta: float) -> void:
@@ -282,9 +309,11 @@ func update_timers(delta: float) -> void:
 		jump_timer = jump_timer - delta
 	if coyote_timer > 0.0:
 		coyote_timer = coyote_timer - delta
+	if grapple_wobble_timer > 0.0:
+		grapple_wobble_timer = grapple_wobble_timer - delta
 
 #todo:
-func update_animations() -> void:
+func update_animations(_delta: float) -> void:
 	if abs(velocity.x) > 0 and abs(input_vector.x) > 0.0:
 		animation.play("walk")
 	else:
@@ -292,11 +321,19 @@ func update_animations() -> void:
 
 	var percent_max_speed: float = abs(velocity.x) / WALKING_MAX_SPEED #todo: this only applies to walking
 	animation.speed_scale = clamp(lerp(0.0, 1.0, percent_max_speed), 0.0, 1.0)
-	animation.flip_h = !is_facing_right
+	animation.flip_h = false if is_facing_right() else true
 
 	if movement_state == MovementState.GRAPPLE:
 		grapple_vfx.region_rect.size.x = grapple_current_length
-		grapple_vfx.position.x = grapple_current_length / 2.0
+		grapple_vfx.visible = true
+		if grapple_direction == Direction.RIGHT:
+			grapple_vfx.position.x = grapple_current_length / 2.0
+			grapple_vfx.flip_h = false
+		else:
+			grapple_vfx.position.x = grapple_current_length / -2.0
+			grapple_vfx.flip_h = true
+		#todo: account for grapple wobble, keep beam fixed at anchor
+
 
 #todo:
 func update_sounds() -> void:
@@ -312,7 +349,7 @@ func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 
 func check_grapple_raycast() -> void:
 	var raycast_target: Vector2 = position
-	raycast_target.x = raycast_target.x + GRAPPLE_LENGTH if is_facing_right else raycast_target.x - GRAPPLE_LENGTH
+	raycast_target.x = raycast_target.x + GRAPPLE_LENGTH if is_facing_right() else raycast_target.x - GRAPPLE_LENGTH
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 
 	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(position, raycast_target, 2)
@@ -320,8 +357,16 @@ func check_grapple_raycast() -> void:
 	var result: Dictionary = space_state.intersect_ray(query)
 
 	if !result.is_empty():
-		grapple_anchor_point = result.get("position")
-		grapple_current_length = position.x - grapple_anchor_point.x if position.x > grapple_anchor_point.x else grapple_anchor_point.x - position.x
+		var collider: StaticBody2D = result.get("collider")
+		grapple_anchor_point = collider.position
+		grapple_current_length = abs(position.x - grapple_anchor_point.x)
+		grapple_wobble_y = position.y
+		grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
+		grapple_direction = facing_direction
+
+
+		grapple_wobble_tween = create_tween()
+		grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 func _physics_process(delta: float) -> void:
 	var was_on_floor: bool = is_on_floor()
@@ -337,6 +382,6 @@ func _physics_process(delta: float) -> void:
 	try_state_transitions()
 
 	update_timers(delta)
-	update_animations()
+	update_animations(delta)
 	update_sounds()
 

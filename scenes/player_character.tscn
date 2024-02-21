@@ -1,11 +1,17 @@
-[gd_scene load_steps=15 format=3 uid="uid://dfsw2b6a66csc"]
+[gd_scene load_steps=17 format=3 uid="uid://dfsw2b6a66csc"]
 
 [ext_resource type="Script" path="res://scenes/player_character.gd" id="1_tvi00"]
 [ext_resource type="Texture2D" uid="uid://c1j6a62dpfluy" path="res://sprites/roll.png" id="2_go6tt"]
+[ext_resource type="Shader" path="res://scenes/player_character.gdshader" id="2_vv55q"]
 [ext_resource type="Texture2D" uid="uid://b76y8f5guboeo" path="res://sprites/grapple_beam.png" id="3_hfalq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0s1jr"]
 size = Vector2(14, 14)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_eoc0f"]
+shader = ExtResource("2_vv55q")
+shader_parameter/speed = Vector2(-12, 0)
+shader_parameter/offset = Vector2(0, 8)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ljosj"]
 atlas = ExtResource("2_go6tt")
@@ -89,6 +95,15 @@ script = ExtResource("1_tvi00")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_0s1jr")
 
+[node name="GrappleVfx" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_eoc0f")
+texture = ExtResource("3_hfalq")
+region_enabled = true
+region_rect = Rect2(0, 0, 48, 16)
+
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_1va03")
@@ -107,10 +122,3 @@ offset_top = -46.0
 offset_right = 51.0
 offset_bottom = -23.0
 scale = Vector2(0.400004, 0.439999)
-
-[node name="GrappleVfx" type="Sprite2D" parent="."]
-texture_filter = 1
-texture_repeat = 2
-texture = ExtResource("3_hfalq")
-region_enabled = true
-region_rect = Rect2(0, 0, 48, 16)
