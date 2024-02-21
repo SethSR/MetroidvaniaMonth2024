@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://d101p7btd5dlr"]
+
+[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/kenney_1-bit-platformer/Tilemap/platformer_tilemap_trans.tres" id="1_vmvpr"]
+[ext_resource type="Script" path="res://scenes/bullet.gd" id="1_xhidc"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xi0be"]
+radius = 3.0
+
+[node name="Bullet" type="StaticBody2D"]
+modulate = Color(1, 0.25, 0.25, 1)
+texture_filter = 1
+collision_layer = 0
+collision_mask = 5
+script = ExtResource("1_xhidc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xi0be")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vmvpr")
+region_enabled = true
+region_rect = Rect2(16, 0, 16, 16)
