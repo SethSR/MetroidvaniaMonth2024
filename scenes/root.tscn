@@ -156,8 +156,9 @@ position = Vector2(424, 295)
 script = ExtResource("5_jo5nr")
 
 [node name="GrappleTarget3" parent="MovementZoo" instance=ExtResource("4_ctrva")]
-position = Vector2(6, 54)
+position = Vector2(9, 54)
 script = ExtResource("5_jo5nr")
+flip_sprite = true
 
 [node name="Turret" parent="." instance=ExtResource("7_0185x")]
 position = Vector2(9, 136)

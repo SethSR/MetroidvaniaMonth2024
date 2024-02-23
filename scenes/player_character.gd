@@ -57,6 +57,7 @@ var grapple_direction: Direction = Direction.RIGHT
 var coyote_timer: float = 0.0
 var facing_direction: Direction = Direction.RIGHT
 
+var progression: PlayerProgression = PlayerProgression.new()
 
 @onready var animation: AnimatedSprite2D = $PlayerSprite
 @onready var grapple_vfx: Sprite2D = $GrappleVfx
@@ -74,7 +75,7 @@ func get_max_dash_charges() -> int:
 	return 1
 
 func get_max_jump_charges() -> int:
-	return 1
+	return 2 if progression.has_unlock(Enums.UnlockType.DOUBLE_JUMP) else 1
 
 func reset_inputs() -> void:
 	wants_jump = false
@@ -97,6 +98,15 @@ func process_input() -> void:
 		released_jump = true
 	if Input.is_action_just_pressed("grapple"):
 		wants_grapple = true
+
+	if Input.is_action_just_pressed("debug_unlock_all"):
+		progression.debug_unlock_all()
+	if Input.is_action_just_pressed("debug_unlock_dash"):
+		progression.unlock(Enums.UnlockType.DASH)
+	if Input.is_action_just_pressed("debug_unlock_double_jump"):
+		progression.unlock(Enums.UnlockType.DOUBLE_JUMP)
+	if Input.is_action_just_pressed("debug_unlock_grapple"):
+		progression.unlock(Enums.UnlockType.GRAPPLE)
 
 func update_debug_label() -> void:
 	var label: Label = $Label
@@ -125,6 +135,8 @@ func try_transition_to_jump() -> bool:
 		return false
 
 func try_transition_to_dash() -> bool:
+	if not progression.has_unlock(Enums.UnlockType.DASH):
+		return false
 	if wants_dash and dash_charges > 0 and abs(input_vector.x) > 0.0:
 		movement_state = MovementState.DASHING
 		dash_charges -= 1
@@ -157,6 +169,8 @@ func try_transition_to_walking() -> bool:
 		return false
 
 func try_transition_to_grapple() -> bool:
+	if not progression.has_unlock(Enums.UnlockType.GRAPPLE):
+		return false
 	if grapple_current_length > 0:
 		movement_state = MovementState.GRAPPLE
 		dash_charges = get_max_dash_charges()
@@ -250,15 +264,14 @@ func physics_walking(delta: float) -> void:
 		apply_friction(EXCESS_SPEED_FRICTION)
 
 	apply_acceleration(delta, WALKING_MAX_SPEED, WALKING_ACCELERATION)
-	#todo: coyote time
 
-#todo
+
 func physics_dashing(delta: float) -> void:
 	apply_friction(DASH_FRICTION)
 	if not is_on_floor():
 		apply_gravity(delta, DASH_GRAVITY)
 
-#todo
+
 func physics_jumping(delta: float) -> void:
 	if released_jump:
 		jump_timer = 0.0
@@ -275,11 +288,12 @@ func physics_jumping(delta: float) -> void:
 func physics_stunned(_delta: float) -> void:
 	pass
 
-#todo
 func physics_grapple(delta: float) -> void:
 	velocity = Vector2.ZERO
+
 	if grapple_current_length > GRAPPLE_LENGTH:
 		grapple_current_length = GRAPPLE_LENGTH # fix for hitting the grapple point hitbox a bit further than the max length, since the hitbox is a bit further out than the anchor point
+
 	if grapple_current_length <= GRAPPLE_LENGTH:
 		var direction_modifier: float = -1.0 if grapple_direction == Direction.RIGHT else 1.0
 		grapple_current_length = grapple_current_length + (GRAPPLE_MAX_SPEED * delta * input_vector.x * direction_modifier)
@@ -363,11 +377,10 @@ func check_grapple_raycast() -> void:
 		var collider: StaticBody2D = result.get("collider")
 		grapple_anchor_point = collider.position
 		grapple_current_length = abs(position.x - grapple_anchor_point.x)
-		grapple_wobble_y = position.y
-		grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
 		grapple_direction = facing_direction
 
-
+		grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
+		grapple_wobble_y = position.y
 		grapple_wobble_tween = create_tween()
 		grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
