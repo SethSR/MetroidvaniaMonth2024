@@ -70,6 +70,11 @@ func ready() -> void:
 	jump_charges = get_max_jump_charges()
 	movement_state = MovementState.FALLING
 
+func on_pickup(unlock: Enums.UnlockType) -> void:
+	if !progression.has_unlock(unlock):
+		progression.unlock(unlock)
+		#todo: animation? sound?
+
 #todo: get from unlocks system
 func get_max_dash_charges() -> int:
 	return 1
@@ -258,7 +263,7 @@ func physics_walking(delta: float) -> void:
 	if is_equal_approx(input_vector.x, 0.0):
 		apply_friction(WALKING_FRICTION)
 	elif input_vector.x * velocity.x < 0.0:
-		apply_friction(WALKING_FRICTION * 1.8) # faster turnaround
+		apply_friction(WALKING_FRICTION * 4) # faster turnaround
 
 	if abs(velocity.x) > WALKING_MAX_SPEED:
 		apply_friction(EXCESS_SPEED_FRICTION)
