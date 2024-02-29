@@ -62,6 +62,11 @@ gdscript/warnings/confusable_identifier=2
 gdscript/warnings/confusable_local_declaration=2
 gdscript/warnings/confusable_local_usage=2
 
+[display]
+
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+
 [editor]
 
 version_control/plugin_name="GitPlugin"

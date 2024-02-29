@@ -1,10 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cx5wlfv55qdrx"]
+[gd_scene load_steps=4 format=3 uid="uid://cx5wlfv55qdrx"]
 
 [ext_resource type="PackedScene" uid="uid://dfsw2b6a66csc" path="res://scenes/player_character.tscn" id="1_xgeu4"]
+[ext_resource type="PackedScene" uid="uid://74wgr2ytxha0" path="res://scenes/test_map_2.tscn" id="3_eaof3"]
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="7_0185x"]
-[ext_resource type="PackedScene" uid="uid://dsm5ii2vmx675" path="res://scenes/pickup_unlock.tscn" id="8_xtkel"]
-[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/kenney_1-bit-platformer/Tilemap/platformer_tilemap_trans.tres" id="9_qrbyt"]
-[ext_resource type="PackedScene" uid="uid://dalno0kt1lsjo" path="res://scenes/test_map_1.tscn" id="10_1ksxm"]
 
 [node name="Root" type="Node"]
 
@@ -12,17 +10,8 @@
 position = Vector2(9, 136)
 firing_lines = [false, false, false, false, false, true, true, true, false, false, false, false, false, false, false, false]
 
-[node name="DashPickup" parent="." instance=ExtResource("8_xtkel")]
-position = Vector2(282, 62)
-unlock_texture = ExtResource("9_qrbyt")
-
-[node name="Area2D" parent="." instance=ExtResource("8_xtkel")]
-position = Vector2(224, 64)
-unlock = 5
-unlock_texture = ExtResource("9_qrbyt")
-
-[node name="TestMap1" parent="." instance=ExtResource("10_1ksxm")]
-
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_xgeu4")]
 position = Vector2(-217, 23)
 slide_on_ceiling = false
+
+[node name="TestMap2" parent="." instance=ExtResource("3_eaof3")]

@@ -31,6 +31,10 @@ enum Direction {LEFT, RIGHT}
 @export var GRAPPLE_ACCELERATION: float = 300
 @export var GRAPPLE_WOBBLE_LENGTH: float = 1.5
 
+@export var STUN_HORIZONTAL_KNOCKBACK: float = 140.0
+@export var STUN_VERTICAL_KNOCKBACK: float = -90.0
+@export var STUN_DURATION: float = 0.6
+
 @export var EXCESS_SPEED_FRICTION: float = 3.0
 
 var movement_state: MovementState = MovementState.FALLING
@@ -53,6 +57,8 @@ var grapple_wobble_timer: float = 0.0
 var grapple_wobble_y: float = 0.0
 var grapple_wobble_tween: Tween
 var grapple_direction: Direction = Direction.RIGHT
+
+var stun_timer: float = 0.0
 
 var coyote_timer: float = 0.0
 var facing_direction: Direction = Direction.RIGHT
@@ -229,7 +235,8 @@ func try_state_transitions() -> void:
 			elif try_transition_to_grapple():
 				return
 		MovementState.STUNNED:
-			movement_state = MovementState.FALLING
+			if stun_timer <= 0.0:
+				movement_state = MovementState.FALLING
 		MovementState.GRAPPLE:
 			if try_transition_to_jump():
 				velocity.y = velocity.y * 0.8 # decrease jump height when coming out of grapple
@@ -290,8 +297,9 @@ func physics_jumping(delta: float) -> void:
 	pass
 
 #todo
-func physics_stunned(_delta: float) -> void:
-	pass
+func physics_stunned(delta: float) -> void:
+	apply_gravity(delta, FALLING_GRAVITY)
+	apply_friction(AIR_FRICTION)
 
 func physics_grapple(delta: float) -> void:
 	velocity = Vector2.ZERO
@@ -333,6 +341,8 @@ func update_timers(delta: float) -> void:
 		coyote_timer = coyote_timer - delta
 	if grapple_wobble_timer > 0.0:
 		grapple_wobble_timer = grapple_wobble_timer - delta
+	if stun_timer > 0.0:
+		stun_timer = stun_timer - delta
 
 #todo:
 func update_animations(_delta: float) -> void:
@@ -388,6 +398,13 @@ func check_grapple_raycast() -> void:
 		grapple_wobble_y = position.y
 		grapple_wobble_tween = create_tween()
 		grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+
+func receive_damage() -> void:
+	print("received damage")
+	movement_state = MovementState.STUNNED
+	velocity.x = -1.0 * STUN_HORIZONTAL_KNOCKBACK if facing_direction == Direction.RIGHT else STUN_HORIZONTAL_KNOCKBACK
+	velocity.y = STUN_VERTICAL_KNOCKBACK
+	stun_timer = STUN_DURATION
 
 func _physics_process(delta: float) -> void:
 	var was_on_floor: bool = is_on_floor()

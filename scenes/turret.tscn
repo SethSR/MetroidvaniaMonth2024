@@ -1,10 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://duc6rcag5hoel"]
+[gd_scene load_steps=5 format=3 uid="uid://duc6rcag5hoel"]
 
 [ext_resource type="Script" path="res://scenes/turret.gd" id="1_yqyir"]
-[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/kenney_1-bit-platformer/Tilemap/platformer_tilemap_trans.tres" id="2_eii05"]
+[ext_resource type="Texture2D" uid="uid://2qdp0c2fhbqy" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_mxa1a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8a4s1"]
 size = Vector2(10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_l5iaw"]
+atlas = ExtResource("2_mxa1a")
+region = Rect2(16, 256, 16, 16)
 
 [node name="Turret" type="StaticBody2D"]
 modulate = Color(0.419608, 0.603922, 0.819608, 1)
@@ -18,6 +22,5 @@ shape = SubResource("RectangleShape2D_8a4s1")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_eii05")
-region_enabled = true
+texture = SubResource("AtlasTexture_l5iaw")
 region_rect = Rect2(0, 256, 16, 16)
