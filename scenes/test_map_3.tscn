@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://cupoye3x10pfh"]
 
 [ext_resource type="Script" path="res://scenes/turret_controller.gd" id="1_73qsj"]
-[ext_resource type="Texture2D" uid="uid://2qdp0c2fhbqy" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_1umah"]
+[ext_resource type="Texture2D" uid="uid://bjnqe08rdrm1l" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_1umah"]
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="3_cgvdo"]
 [ext_resource type="PackedScene" uid="uid://d1bxdxammi3d3" path="res://scenes/grapple_target.tscn" id="4_5003n"]
 [ext_resource type="PackedScene" uid="uid://dsm5ii2vmx675" path="res://scenes/pickup_unlock.tscn" id="5_upo2s"]
@@ -1383,53 +1383,53 @@ texture = SubResource("AtlasTexture_3i74w")
 
 [node name="Turret" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(120, 196)
-cooldown_duration = 1.2
-firing_lines = [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+duration_cooldown = 1.2
+firing_lines = 16
 
 [node name="Turret2" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(310, -171)
-cooldown_duration = 1.2
-firing_lines = [false, false, false, false, false, false, false, false, false, false, false, false, true, false, false, false]
+duration_cooldown = 1.2
+firing_lines = 4096
 
 [node name="Turret3" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(164, -330)
-cooldown_duration = 1.2
-firing_lines = [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+duration_cooldown = 1.2
+firing_lines = 48
 
 [node name="Turret4" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(231, -331)
-cooldown_duration = 1.2
-firing_lines = [false, false, false, false, true, false, false, false, false, false, false, false, false, false, false, false]
+duration_cooldown = 1.2
+firing_lines = 16
 
 [node name="Turret5" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(11, -297)
-cooldown_duration = 1.0
-firing_lines = [false, false, false, false, false, false, false, false, true, false, false, false, false, false, false, false]
+duration_cooldown = 1.0
+firing_lines = 1280
 
 [node name="Turret6" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(38, -617)
-cooldown_duration = 1.0
-firing_lines = [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+duration_cooldown = 1.0
+firing_lines = 8193
 
 [node name="Turret7" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(172, -633)
-cooldown_duration = 1.0
-firing_lines = [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+duration_cooldown = 1.0
+firing_lines = 128
 
 [node name="Turret8" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(91, -819)
-cooldown_duration = 1.0
-firing_lines = [false, false, false, false, false, false, false, true, false, false, false, false, false, false, false, false]
+duration_cooldown = 1.0
+firing_lines = 2304
 
 [node name="Turret9" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(-69, -839)
-cooldown_duration = 1.0
-firing_lines = [true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false]
+duration_cooldown = 1.0
+firing_lines = 16386
 
 [node name="Turret10" parent="." instance=ExtResource("3_cgvdo")]
 position = Vector2(56, -998)
-cooldown_duration = 1.0
-firing_lines = [false, false, false, false, false, false, false, false, false, false, false, false, true, false, true, false]
+duration_cooldown = 1.0
+firing_lines = 20480
 
 [node name="GrappleTarget" parent="." instance=ExtResource("4_5003n")]
 position = Vector2(122, -214)

@@ -2,10 +2,10 @@ extends StaticBody2D
 
 class_name Bullet
 
-@export var lifetime: float = 3.0
+var lifetime: float = 3.0
 @export var knockback: int = 100
-@export var speed: float = 80.0
-@export var direction: Vector2 = Vector2.ZERO
+var speed: float = 80.0
+var direction: Vector2 = Vector2.ZERO
 
 var life_timer: float = lifetime
 

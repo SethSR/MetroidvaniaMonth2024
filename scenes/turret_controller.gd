@@ -1,6 +1,13 @@
 extends Node
 
-func _on_turret_shoot(bullet: Bullet, direction: Vector2, location: Vector2) -> void:
+const BULLET_SCENE: PackedScene = preload("res://scenes/bullet.tscn")
+
+func _on_turret_shoot(lifetime: float, direction: Vector2, location: Vector2, speed: float) -> void:
+	var bullet: Bullet = BULLET_SCENE.instantiate()
+
+	bullet.lifetime = lifetime
+	bullet.speed = speed
 	bullet.direction = direction
 	bullet.position = location
+
 	add_child(bullet)
