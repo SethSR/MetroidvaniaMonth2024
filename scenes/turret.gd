@@ -34,6 +34,16 @@ var mode: Mode = Mode.Startup
 var delay_timer: float = 0.0
 var cooldown_timer: float = 0.0
 
+func _ready() -> void:
+	var parent: Node = get_parent()
+	while !(parent is TurretController):
+		parent = parent.get_parent()
+
+	assert(parent != null, "Turrets must have a TurretController ancestor")
+
+	var tc: TurretController = parent as TurretController
+	shoot.connect(tc._on_turret_shoot)
+
 func _process(delta: float) -> void:
 	if mode == Mode.Startup:
 		mode = process_startup(delta)
