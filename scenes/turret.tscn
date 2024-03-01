@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://duc6rcag5hoel"]
+[gd_scene load_steps=7 format=3 uid="uid://duc6rcag5hoel"]
 
 [ext_resource type="Script" path="res://scenes/turret.gd" id="1_yqyir"]
 [ext_resource type="Texture2D" uid="uid://bjnqe08rdrm1l" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_mxa1a"]
+[ext_resource type="AudioStream" uid="uid://bohvy70t1ojuv" path="res://assets/sounds/shot_quiet.wav" id="3_ivfkx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8a4s1"]
 size = Vector2(10, 10)
@@ -9,6 +10,12 @@ size = Vector2(10, 10)
 [sub_resource type="AtlasTexture" id="AtlasTexture_l5iaw"]
 atlas = ExtResource("2_mxa1a")
 region = Rect2(0, 0, 320, 320)
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_8xeaa"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("3_ivfkx")
+stream_0/weight = 1.0
 
 [node name="Turret" type="StaticBody2D"]
 modulate = Color(0.419608, 0.603922, 0.819608, 1)
@@ -25,3 +32,8 @@ texture_filter = 1
 texture = SubResource("AtlasTexture_l5iaw")
 region_enabled = true
 region_rect = Rect2(0, 256, 16, 16)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_8xeaa")
+max_distance = 1000.0
+attenuation = 3.03143

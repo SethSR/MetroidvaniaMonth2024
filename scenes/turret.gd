@@ -28,6 +28,8 @@ enum Facing {
 @export_flags("N:16", "E:1", "W:256", "S:4096", "NE:4", "NW:64", "SW:1024", "SE:16384", "NNE:8", "NNW:32", "ENE:2", "ESE:32768", "WNW:128", "WSW:512", "SSW:2048", "SSE:8192")
 var firing_lines: int = 0
 
+@onready var sfx: AudioStreamPlayer2D = $AudioStreamPlayer2D
+
 var mode: Mode = Mode.Startup
 var delay_timer: float = 0.0
 var cooldown_timer: float = 0.0
@@ -40,6 +42,7 @@ func _process(delta: float) -> void:
 		for i: int in range(16):
 			if (firing_lines >> i) & 1:
 				shoot.emit(bullet_lifetime, Vector2.from_angle(i * -TAU/16), position, bullet_speed)
+		sfx.play()
 
 func process_startup(delta: float) -> Mode:
 	delay_timer += delta

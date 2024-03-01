@@ -124,3 +124,6 @@ offset_top = -46.0
 offset_right = 51.0
 offset_bottom = -23.0
 scale = Vector2(0.400004, 0.439999)
+
+[node name="AudioListener2D" type="AudioListener2D" parent="."]
+current = true
