@@ -34,24 +34,24 @@ var cooldown_timer: float = 0.0
 
 func _process(delta: float) -> void:
 	if mode == Mode.Startup:
-		mode = Turret.process_startup(delta, delay_timer, duration_delay)
+		mode = process_startup(delta)
 
-	if mode == Mode.Cycle and Turret.process_cycle(delta, cooldown_timer, duration_cooldown):
+	if mode == Mode.Cycle and process_cycle(delta):
 		for i: int in range(16):
 			if (firing_lines >> i) & 1:
 				shoot.emit(bullet_lifetime, Vector2.from_angle(i * -TAU/16), position, bullet_speed)
 
-static func process_startup(delta: float, timer: float, duration: float) -> Mode:
-	timer += delta
-	if timer < duration:
+func process_startup(delta: float) -> Mode:
+	delay_timer += delta
+	if delay_timer < duration_delay:
 		return Mode.Startup
 	else:
 		return Mode.Cycle
 
-static func process_cycle(delta: float, timer: float, duration: float) -> bool:
-	timer += delta
-	if timer < duration:
+func process_cycle(delta: float) -> bool:
+	cooldown_timer += delta
+	if cooldown_timer < duration_cooldown:
 		return false
 
-	timer -= duration
+	cooldown_timer -= duration_cooldown
 	return true
