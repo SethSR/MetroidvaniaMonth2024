@@ -6,7 +6,7 @@
 [node name="Root" type="Node"]
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_xgeu4")]
-position = Vector2(152, -344)
+position = Vector2(-168, 104)
 slide_on_ceiling = false
 
 [node name="TestMapLeft" parent="." instance=ExtResource("3_widj0")]

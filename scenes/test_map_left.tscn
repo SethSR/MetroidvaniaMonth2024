@@ -4,8 +4,8 @@
 [ext_resource type="TileSet" uid="uid://b1n0xst6lpm78" path="res://assets/platformer_tileset_trans.tres" id="2_6ve61"]
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="3_nt5h8"]
 [ext_resource type="PackedScene" uid="uid://cyxhiex35te0e" path="res://scenes/door.tscn" id="4_0o4bf"]
-[ext_resource type="PackedScene" uid="uid://chwurbeev6fv8" path="res://scenes/test_map_right.tscn" id="5_4jx83"]
 [ext_resource type="Resource" uid="uid://6eih1wegj8yw" path="res://assets/doors/test_map_left_to_test_map_right.tres" id="5_m8506"]
+[ext_resource type="PackedScene" uid="uid://chwurbeev6fv8" path="res://scenes/test_map_right.tscn" id="5_vid8x"]
 
 [node name="TestMapLeft" type="Node2D"]
 script = ExtResource("1_bitui")
@@ -41,6 +41,6 @@ firing_lines = 64
 
 [node name="Door" parent="." instance=ExtResource("4_0o4bf")]
 position = Vector2(200, -376)
-NextLevel = ExtResource("5_4jx83")
+NextLevel = ExtResource("5_vid8x")
 door_link = ExtResource("5_m8506")
 connection = 3
