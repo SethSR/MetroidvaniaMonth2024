@@ -424,3 +424,11 @@ func _physics_process(delta: float) -> void:
 	update_animations(delta)
 	update_sounds()
 
+	for i: int in get_slide_collision_count():
+		var coll: KinematicCollision2D = get_slide_collision(i)
+		if coll == null: continue
+
+		var coll_obj: Node = coll.get_collider()
+		if coll_obj is Door:
+			var door: Door = coll_obj as Door;
+			door.on_player_collision()

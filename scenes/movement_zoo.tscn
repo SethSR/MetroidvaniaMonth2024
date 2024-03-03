@@ -1,8 +1,8 @@
 [gd_scene load_steps=11 format=3 uid="uid://bo3hxl0xtsrbn"]
 
-[ext_resource type="Script" path="res://scenes/turret_controller.gd" id="1_5x4v0"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_5x4v0"]
 [ext_resource type="Texture2D" uid="uid://bver6stddvgrp" path="res://sprites/debug_tile.png" id="2_1701y"]
-[ext_resource type="Texture2D" uid="uid://2qdp0c2fhbqy" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="3_ah2no"]
+[ext_resource type="Texture2D" uid="uid://bjnqe08rdrm1l" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="3_ah2no"]
 [ext_resource type="Texture2D" uid="uid://bvysfy1jyswg8" path="res://sprites/debug_tile.tres" id="4_gq31s"]
 [ext_resource type="PackedScene" uid="uid://d1bxdxammi3d3" path="res://scenes/grapple_target.tscn" id="5_ui7lw"]
 [ext_resource type="Script" path="res://scenes/grapple_target.gd" id="6_6aoiy"]

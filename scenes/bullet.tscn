@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://d101p7btd5dlr"]
 
 [ext_resource type="Script" path="res://scenes/bullet.gd" id="1_xhidc"]
-[ext_resource type="Texture2D" uid="uid://dxe8hkv7bp5y7" path="res://assets/kenney_1-bit-platformer/Tilemap/sprite_bullet.tres" id="2_enmlm"]
+[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/platformer_atlas_trans.tres" id="2_qcpkk"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_xi0be"]
 radius = 3.0
@@ -17,6 +17,6 @@ script = ExtResource("1_xhidc")
 shape = SubResource("CircleShape2D_xi0be")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_enmlm")
+texture = ExtResource("2_qcpkk")
 region_enabled = true
-region_rect = Rect2(16, 0, 16, 16)
+region_rect = Rect2(0, 16, 16, 16)

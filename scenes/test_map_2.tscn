@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://74wgr2ytxha0"]
 
-[ext_resource type="Script" path="res://scenes/turret_controller.gd" id="1_5v0ei"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_5v0ei"]
 [ext_resource type="Texture2D" uid="uid://bjnqe08rdrm1l" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="1_uuf0c"]
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="2_q42la"]
 

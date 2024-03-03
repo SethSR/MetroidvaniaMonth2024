@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://cyxhiex35te0e"]
+
+[ext_resource type="Script" path="res://scenes/door.gd" id="1_8uja4"]
+[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/platformer_atlas_trans.tres" id="4_u3hih"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_402v4"]
+size = Vector2(16, 64)
+
+[node name="Door" type="StaticBody2D"]
+collision_mask = 4
+script = ExtResource("1_8uja4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_402v4")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture_filter = 1
+texture = ExtResource("4_u3hih")
+region_enabled = true
+region_rect = Rect2(16, 64, 16, 16)

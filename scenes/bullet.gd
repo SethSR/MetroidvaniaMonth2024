@@ -16,9 +16,11 @@ func _process(delta: float) -> void:
 
 func _physics_process(delta: float) -> void:
 	var coll: KinematicCollision2D = move_and_collide(speed * direction.normalized() * delta)
-	if coll != null:
-		var player: Player = coll.get_collider() as Player
-		if player != null:
-			print("collision with: ", player)
-			player.receive_damage()
-		queue_free()
+	if coll == null:
+		return
+
+	queue_free()
+	var player: Player = coll.get_collider() as Player
+	if player != null:
+		print("collision with: ", player)
+		player.receive_damage()

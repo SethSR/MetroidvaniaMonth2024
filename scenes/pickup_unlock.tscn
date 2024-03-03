@@ -18,5 +18,7 @@ shape = SubResource("CapsuleShape2D_vsplw")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
 texture = ExtResource("2_37w0n")
+region_enabled = true
+region_rect = Rect2(32, 64, 16, 16)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
