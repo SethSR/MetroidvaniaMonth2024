@@ -44,6 +44,8 @@ var wants_jump: bool = false
 var released_jump: bool = false
 var wants_dash: bool = false
 var wants_grapple: bool = false
+var stunned_this_frame: bool = false
+var grappled_this_frame: bool = false
 
 var jump_timer: float = 0.0
 var jump_charges: int = 0
@@ -94,6 +96,8 @@ func reset_inputs() -> void:
 	released_jump = false
 	wants_dash = false
 	wants_grapple = false
+	grappled_this_frame = false
+	stunned_this_frame = false
 
 func process_input() -> void:
 	input_vector.x = Input.get_axis("move_left", "move_right")
@@ -183,7 +187,7 @@ func try_transition_to_walking() -> bool:
 func try_transition_to_grapple() -> bool:
 	if not progression.has_unlock(Enums.UnlockType.GRAPPLE):
 		return false
-	if grapple_current_length > 0:
+	if grappled_this_frame:
 		movement_state = MovementState.GRAPPLE
 		dash_charges = get_max_dash_charges()
 		jump_charges = get_max_jump_charges()
@@ -197,6 +201,12 @@ func end_grapple_state() -> void:
 	grapple_wobble_tween.kill()
 
 func try_state_transitions() -> void:
+	if stunned_this_frame:
+		movement_state = MovementState.STUNNED
+		if movement_state == MovementState.GRAPPLE:
+			end_grapple_state()
+		return
+
 	match movement_state:
 		MovementState.FALLING:
 			if try_transition_to_jump():
@@ -345,7 +355,6 @@ func update_timers(delta: float) -> void:
 	if stun_timer > 0.0:
 		stun_timer = stun_timer - delta
 
-#todo:
 func update_animations(_delta: float) -> void:
 	if abs(velocity.x) > 0 and abs(input_vector.x) > 0.0:
 		animation.play("walk")
@@ -367,8 +376,6 @@ func update_animations(_delta: float) -> void:
 			grapple_vfx.flip_h = true
 		#todo: account for grapple wobble, keep beam fixed at anchor
 
-
-#todo:
 func update_sounds() -> void:
 	return
 
@@ -407,6 +414,7 @@ func check_grapple_raycast() -> void:
 			grapple_anchor_point = collider.position
 			grapple_current_length = abs(position.x - grapple_anchor_point.x)
 			grapple_direction = facing_direction
+			grappled_this_frame = true
 
 			grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
 			grapple_wobble_y = position.y
@@ -415,7 +423,7 @@ func check_grapple_raycast() -> void:
 
 func receive_damage() -> void:
 	print("received damage")
-	movement_state = MovementState.STUNNED
+	stunned_this_frame = true
 	velocity.x = -1.0 * STUN_HORIZONTAL_KNOCKBACK if facing_direction == Direction.RIGHT else STUN_HORIZONTAL_KNOCKBACK
 	velocity.y = STUN_VERTICAL_KNOCKBACK
 	stun_timer = STUN_DURATION
