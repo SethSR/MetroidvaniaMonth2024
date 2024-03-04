@@ -30,6 +30,7 @@ enum Direction {LEFT, RIGHT}
 @export var GRAPPLE_MAX_SPEED: float = 20.0
 @export var GRAPPLE_ACCELERATION: float = 300
 @export var GRAPPLE_WOBBLE_LENGTH: float = 1.5
+@export var GRAPPLE_TRACE_RADIUS: float = 6.0
 
 @export var STUN_HORIZONTAL_KNOCKBACK: float = 140.0
 @export var STUN_VERTICAL_KNOCKBACK: float = -90.0
@@ -384,20 +385,33 @@ func check_grapple_raycast() -> void:
 	raycast_target.x = raycast_target.x + GRAPPLE_LENGTH if is_facing_right() else raycast_target.x - GRAPPLE_LENGTH
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 
-	var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(position, raycast_target, 2)
+	#var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(position, raycast_target, 2)
+	var trace_shape: CircleShape2D = CircleShape2D.new()
+	trace_shape.radius = GRAPPLE_TRACE_RADIUS
+
+	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
+	query.shape = trace_shape
+	query.motion = raycast_target - position
+	query.collision_mask = 2
 	query.exclude = [self]
-	var result: Dictionary = space_state.intersect_ray(query)
+	query.transform = Transform2D(0.0, position)
 
-	if !result.is_empty():
-		var collider: StaticBody2D = result.get("collider")
-		grapple_anchor_point = collider.position
-		grapple_current_length = abs(position.x - grapple_anchor_point.x)
-		grapple_direction = facing_direction
+	var result_arr: Array[Dictionary] = space_state.intersect_shape(query, 1)
+	if result_arr.size() > 0:
 
-		grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
-		grapple_wobble_y = position.y
-		grapple_wobble_tween = create_tween()
-		grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+		var result: Dictionary = result_arr[0]
+		if !result.is_empty():
+			print("hit something with grapple!")
+
+			var collider: StaticBody2D = result.get("collider")
+			grapple_anchor_point = collider.position
+			grapple_current_length = abs(position.x - grapple_anchor_point.x)
+			grapple_direction = facing_direction
+
+			grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
+			grapple_wobble_y = position.y
+			grapple_wobble_tween = create_tween()
+			grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 func receive_damage() -> void:
 	print("received damage")
