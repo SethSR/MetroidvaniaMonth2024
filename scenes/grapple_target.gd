@@ -1,4 +1,5 @@
 extends StaticBody2D
+class_name GrappleTarget
 
 var is_grappled: bool = false
 @export var flip_sprite: bool = false

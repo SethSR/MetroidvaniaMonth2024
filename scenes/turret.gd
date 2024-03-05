@@ -24,6 +24,7 @@ enum Facing {
 @export_group("Bullet", "bullet_")
 @export var bullet_speed: float = 80.0
 @export var bullet_lifetime: float = 3.0
+@export var bullet_polarity: Enums.Polarity = Enums.Polarity.RED
 @export_group("Firing Lines")
 @export_flags("N:16", "E:1", "W:256", "S:4096", "NE:4", "NW:64", "SW:1024", "SE:16384", "NNE:8", "NNW:32", "ENE:2", "ESE:32768", "WNW:128", "WSW:512", "SSW:2048", "SSE:8192")
 var firing_lines: int = 0
@@ -54,7 +55,7 @@ func _process(delta: float) -> void:
 	if mode == Mode.Cycle and process_cycle(delta):
 		for i: int in range(16):
 			if (firing_lines >> i) & 1:
-				shoot.emit(bullet_lifetime, Vector2.from_angle(i * -TAU/16), position, bullet_speed)
+				shoot.emit(bullet_lifetime, Vector2.from_angle(i * -TAU/16), position, bullet_speed, bullet_polarity)
 		sfx.play()
 
 func process_startup(delta: float) -> Mode:

@@ -36,6 +36,10 @@ enum Direction {LEFT, RIGHT}
 @export var STUN_VERTICAL_KNOCKBACK: float = -90.0
 @export var STUN_DURATION: float = 0.6
 
+@export var SHIELD_DURATION: float = 1.0
+@export var POLARITY_RED_TINT: Color = Color.PALE_VIOLET_RED
+@export var POLARITY_BLUE_TINT: Color = Color.SKY_BLUE
+
 @export var EXCESS_SPEED_FRICTION: float = 3.0
 
 var movement_state: MovementState = MovementState.FALLING
@@ -46,6 +50,7 @@ var wants_dash: bool = false
 var wants_grapple: bool = false
 var stunned_this_frame: bool = false
 var grappled_this_frame: bool = false
+var wants_polarity_change: bool = false
 
 var jump_timer: float = 0.0
 var jump_charges: int = 0
@@ -62,9 +67,11 @@ var grapple_wobble_tween: Tween
 var grapple_direction: Direction = Direction.RIGHT
 
 var stun_timer: float = 0.0
+var polarity_timer: float = 0.0
 
 var coyote_timer: float = 0.0
 var facing_direction: Direction = Direction.RIGHT
+var current_polarity: Enums.Polarity = Enums.Polarity.NONE
 
 var progression: PlayerProgression = PlayerProgression.new()
 
@@ -98,6 +105,7 @@ func reset_inputs() -> void:
 	wants_grapple = false
 	grappled_this_frame = false
 	stunned_this_frame = false
+	wants_polarity_change = false
 
 func process_input() -> void:
 	input_vector.x = Input.get_axis("move_left", "move_right")
@@ -114,6 +122,8 @@ func process_input() -> void:
 		released_jump = true
 	if Input.is_action_just_pressed("grapple"):
 		wants_grapple = true
+	if Input.is_action_just_pressed("switch_polarity"):
+		wants_polarity_change = true
 
 	if Input.is_action_just_pressed("debug_unlock_all"):
 		progression.debug_unlock_all()
@@ -123,6 +133,10 @@ func process_input() -> void:
 		progression.unlock(Enums.UnlockType.DOUBLE_JUMP)
 	if Input.is_action_just_pressed("debug_unlock_grapple"):
 		progression.unlock(Enums.UnlockType.GRAPPLE)
+	if Input.is_action_just_pressed("debug_unlock_polarity_1"):
+		progression.unlock(Enums.UnlockType.POLARITY_1)
+	if Input.is_action_just_pressed("debug_unlock_polarity_2"):
+		progression.unlock(Enums.UnlockType.POLARITY_2)
 
 func update_debug_label() -> void:
 	var label: Label = $Label
@@ -405,12 +419,10 @@ func check_grapple_raycast() -> void:
 
 	var result_arr: Array[Dictionary] = space_state.intersect_shape(query, 1)
 	if result_arr.size() > 0:
-
 		var result: Dictionary = result_arr[0]
 		if !result.is_empty():
 			print("hit something with grapple!")
-
-			var collider: StaticBody2D = result.get("collider")
+			var collider: StaticBody2D = result.get("collider") as StaticBody2D
 			grapple_anchor_point = collider.position
 			grapple_current_length = abs(position.x - grapple_anchor_point.x)
 			grapple_direction = facing_direction
@@ -421,14 +433,38 @@ func check_grapple_raycast() -> void:
 			grapple_wobble_tween = create_tween()
 			grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
-func receive_damage() -> void:
+func receive_damage(projectile: Bullet) -> void:
+	if projectile.polarity == current_polarity:
+		return
 	print("received damage")
 	stunned_this_frame = true
 	velocity.x = -1.0 * STUN_HORIZONTAL_KNOCKBACK if facing_direction == Direction.RIGHT else STUN_HORIZONTAL_KNOCKBACK
 	velocity.y = STUN_VERTICAL_KNOCKBACK
 	stun_timer = STUN_DURATION
 
+func update_polarity(delta: float) -> void:
+	if progression.has_unlock(Enums.UnlockType.POLARITY_2) and wants_polarity_change:
+		if current_polarity == Enums.Polarity.BLUE:
+			current_polarity = Enums.Polarity.RED
+			animation.modulate = POLARITY_RED_TINT
+		else:
+			current_polarity = Enums.Polarity.BLUE
+			animation.modulate = POLARITY_BLUE_TINT
+
+	elif progression.has_unlock(Enums.UnlockType.POLARITY_1):
+		if polarity_timer > 0.0:
+			polarity_timer = polarity_timer - delta
+			if polarity_timer <= 0.0:
+				current_polarity = Enums.Polarity.NONE
+				animation.modulate = Color.WHITE
+		elif current_polarity == Enums.Polarity.NONE and wants_polarity_change:
+			current_polarity = Enums.Polarity.RED
+			animation.modulate = POLARITY_RED_TINT
+			polarity_timer = SHIELD_DURATION
+
 func _physics_process(delta: float) -> void:
+	update_polarity(delta)
+
 	var was_on_floor: bool = is_on_floor()
 	update_velocity(delta)
 	@warning_ignore("return_value_discarded")
