@@ -4,12 +4,13 @@ class_name Level
 
 const BULLET_SCENE: PackedScene = preload("res://scenes/bullet.tscn")
 
-var doors: Array[Door] = []
+var doors: Dictionary = {}
 
 func setup() -> void:
 	for child: Node in get_children():
 		if child is Door:
-			doors.push_back(child as Door)
+			var door: Door = child as Door
+			doors[door.door_link] = door
 
 func _on_turret_shoot(lifetime: float, direction: Vector2, location: Vector2, speed: float, polarity: Enums.Polarity) -> void:
 	var bullet: Bullet = BULLET_SCENE.instantiate()
