@@ -1,7 +1,7 @@
 [gd_scene load_steps=12 format=3 uid="uid://ppxd2letla6x"]
 
-[ext_resource type="Script" path="res://scenes/turret.gd" id="1_43e32"]
-[ext_resource type="Texture2D" uid="uid://2qdp0c2fhbqy" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_x0psp"]
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_85yr0"]
+[ext_resource type="Texture2D" uid="uid://bjnqe08rdrm1l" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_x0psp"]
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="4_apyle"]
 [ext_resource type="PackedScene" uid="uid://d1bxdxammi3d3" path="res://scenes/grapple_target.tscn" id="4_ibkiw"]
 
@@ -1356,7 +1356,7 @@ pattern_3 = SubResource("TileMapPattern_xvgud")
 pattern_4 = SubResource("TileMapPattern_lrxc3")
 
 [node name="TestMap3" type="Node2D"]
-script = ExtResource("1_43e32")
+script = ExtResource("1_85yr0")
 
 [node name="TileMap3" type="TileMap" parent="."]
 texture_filter = 1

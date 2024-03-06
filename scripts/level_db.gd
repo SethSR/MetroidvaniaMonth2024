@@ -21,14 +21,15 @@ func _ready() -> void:
 	current_level.setup()
 
 func _on_door_entered(door: Door) -> void:
-	door.open()
 	if loaded_levels.has(door.next_level):
 		var next_level: Level = loaded_levels[door.next_level]
 		var other_door: Door = next_level.doors[door.door_link]
+		door.open()
 		other_door.open()
 	else:
 		var next_level: Level = load_level(door.next_level)
 		var other_door: Door = next_level.doors[door.door_link]
+		door.open()
 		other_door.open()
 
 		next_level.position = door.global_position - other_door.position
