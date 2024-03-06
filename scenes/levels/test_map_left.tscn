@@ -18,14 +18,14 @@ layer_0/tile_data = PackedInt32Array(458764, 983041, 14, 393228, 983041, 14, 327
 [node name="Turret3" parent="." instance=ExtResource("3_nt5h8")]
 position = Vector2(8, -216)
 rotation = 1.5708
-duration_cooldown = 1.0
+duration_cooldown = Array[float]([0.1, 0.1, 1.2])
 bullet_lifetime = 1.0
 firing_lines = 4096
 
 [node name="Turret4" parent="." instance=ExtResource("3_nt5h8")]
 position = Vector2(56, -104)
 rotation = 3.14159
-duration_cooldown = 0.75
+duration_cooldown = Array[float]([0.8])
 bullet_speed = 120.0
 bullet_lifetime = 1.0
 firing_lines = 10240
@@ -33,7 +33,7 @@ firing_lines = 10240
 [node name="Turret5" parent="." instance=ExtResource("3_nt5h8")]
 position = Vector2(104, -312)
 rotation = -1.5708
-duration_cooldown = 1.0
+duration_cooldown = Array[float]([0.8])
 bullet_speed = 100.0
 bullet_lifetime = 1.0
 firing_lines = 64
