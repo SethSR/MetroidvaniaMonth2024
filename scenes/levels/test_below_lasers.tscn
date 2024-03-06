@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://bsgl6aujxnijg"]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_aql2p"]
+[ext_resource type="TileSet" uid="uid://b1n0xst6lpm78" path="res://assets/platformer_tileset_trans.tres" id="2_0cx4m"]
+[ext_resource type="PackedScene" uid="uid://cyxhiex35te0e" path="res://scenes/door.tscn" id="3_gm2ju"]
+[ext_resource type="Resource" uid="uid://cey5jhagh03iy" path="res://assets/doors/test_lasers_to_below.tres" id="4_ogiq3"]
+
+[node name="TestBelowLasers" type="Node2D"]
+script = ExtResource("1_aql2p")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_0cx4m")
+format = 2
+layer_0/tile_data = PackedInt32Array(65538, 851969, 6, 2, 851969, 6, -65534, 851969, 6, -131070, 851969, 6, -65539, 851969, 6, -3, 851969, 6, 65533, 851969, 6, 131069, 851969, 6, 196605, 720897, 9, 196606, 720897, 9, 196607, 720897, 9, 131072, 720897, 9, 131073, 720897, 9, 131074, 720897, 9)
+
+[node name="Door" parent="." instance=ExtResource("3_gm2ju")]
+position = Vector2(24, -24)
+rotation = 1.5708
+next_level = "res://scenes/levels/test_lasers.tscn"
+door_link = ExtResource("4_ogiq3")

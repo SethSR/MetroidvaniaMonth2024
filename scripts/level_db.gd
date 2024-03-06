@@ -32,18 +32,28 @@ func _on_door_entered(door: Door) -> void:
 		door.open()
 		other_door.open()
 
-		next_level.position = door.global_position - other_door.position
+		# door = p:(-200,-120) gp:(328,-184)
+		# next_level = p:gp:(-248,-72)
+		# other_door = p:(200, -376) gp:(-48,-448)
+
+		# door.gp - other_door.gp = (376, 264)
+		# next_level.p + (376, 264) = (128,192)
+		# other_door.gp = (128,192) + other_door.p = (328,-184)
+
+		next_level.position += door.global_position - other_door.global_position
+		print(door.connection)
 		match door.connection:
-			1: next_level.position.y -= 16
-			2: next_level.position.y += 16
+			0: next_level.position.y -= 16
+			1: next_level.position.y += 16 # okay
+			2: next_level.position.x -= 16
 			3: next_level.position.x += 16
-			4: next_level.position.x -= 16
 
 func load_level(level_scene_path: String) -> Level:
 	var next_level: Level = (load(level_scene_path) as PackedScene).instantiate()
 	next_level.setup()
 	loaded_levels[level_scene_path] = next_level
 	root_node.add_child(next_level)
+	next_level.owner = root_node
 	return next_level
 
 func _on_door_sensor_exited(door: Door) -> void:

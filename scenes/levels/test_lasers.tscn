@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://dinjcdn5s6uaf"]
+
+[ext_resource type="Script" path="res://scenes/level.gd" id="1_1slwp"]
+[ext_resource type="TileSet" uid="uid://b1n0xst6lpm78" path="res://assets/platformer_tileset_trans.tres" id="2_dtuet"]
+[ext_resource type="PackedScene" uid="uid://30ugru35djww" path="res://scenes/laser.tscn" id="3_7gcu8"]
+[ext_resource type="PackedScene" uid="uid://cyxhiex35te0e" path="res://scenes/door.tscn" id="4_n2u5u"]
+[ext_resource type="Resource" uid="uid://cey5jhagh03iy" path="res://assets/doors/test_lasers_to_below.tres" id="5_y0i8v"]
+
+[node name="TestLasers" type="Node2D"]
+script = ExtResource("1_1slwp")
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = ExtResource("2_dtuet")
+format = 2
+layer_0/tile_data = PackedInt32Array(-196617, 720897, 11, -196616, 720897, 11, -196615, 720897, 11, -196614, 720897, 11, -196613, 720897, 11, -196612, 720897, 11, -196611, 720897, 11, -196610, 720897, 11, -196609, 720897, 11, -262144, 720897, 11, -262143, 720897, 11, -262142, 720897, 11, -262141, 720897, 11, -262140, 720897, 11, -262139, 720897, 11, -262138, 720897, 11, -262137, 720897, 11, -262136, 720897, 11, -262135, 720897, 11, -262134, 720897, 11, -262133, 720897, 11, -262132, 720897, 11, -262131, 720897, 11, -262130, 720897, 11, -262129, 720897, 11, -262128, 720897, 11, -262127, 720897, 11, -262126, 720897, 11, 262135, 720897, 9, 262136, 720897, 9, 262137, 720897, 9, 262138, 720897, 9, 262139, 720897, 9, 262140, 720897, 9, 262141, 720897, 9, 262142, 720897, 9, 262143, 720897, 9, 196608, 720897, 9, 196609, 720897, 9, 196610, 720897, 9, 196611, 720897, 9, 196612, 720897, 9, 196613, 720897, 9, 196614, 720897, 9, 196615, 720897, 9, 196616, 720897, 9, 196617, 720897, 9, 196618, 720897, 9, 196619, 720897, 9, 196620, 720897, 9, 196621, 720897, 9, 196622, 720897, 9, 196623, 720897, 9, 196624, 720897, 9, 196625, 720897, 9, 196626, 720897, 9)
+
+[node name="Laser" parent="." instance=ExtResource("3_7gcu8")]
+position = Vector2(80, -40)
+rotation = 3.14159
+
+[node name="Door" parent="." instance=ExtResource("4_n2u5u")]
+position = Vector2(-152, 56)
+rotation = 1.5708
+next_level = "res://scenes/levels/test_below_lasers.tscn"
+door_link = ExtResource("5_y0i8v")
+connection = 1
