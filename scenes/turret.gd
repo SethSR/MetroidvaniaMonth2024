@@ -20,7 +20,7 @@ enum Facing {
 
 @export_group("Durations", "duration_")
 @export var duration_delay: float = 0.0
-@export var duration_cooldown: float = 0.2
+@export var duration_cooldown: Array[float] = [0.2]
 @export_group("Bullet", "bullet_")
 @export var bullet_speed: float = 80.0
 @export var bullet_lifetime: float = 3.0
@@ -34,6 +34,8 @@ var firing_lines: int = 0
 var mode: Mode = Mode.Startup
 var delay_timer: float = 0.0
 var cooldown_timer: float = 0.0
+var cooldown_index: int = 0
+var is_active: bool = false
 
 func _ready() -> void:
 	var parent: Node = get_parent()
@@ -52,7 +54,7 @@ func _process(delta: float) -> void:
 	if mode == Mode.Startup:
 		mode = process_startup(delta)
 
-	if mode == Mode.Cycle and process_cycle(delta):
+	if mode == Mode.Cycle and process_cycle(delta) and is_active:
 		for i: int in range(16):
 			if (firing_lines >> i) & 1:
 				shoot.emit(bullet_lifetime, Vector2.from_angle(i * -TAU/16), position, bullet_speed, bullet_polarity)
@@ -67,8 +69,17 @@ func process_startup(delta: float) -> Mode:
 
 func process_cycle(delta: float) -> bool:
 	cooldown_timer += delta
-	if cooldown_timer < duration_cooldown:
+	if cooldown_timer < duration_cooldown[cooldown_index]:
 		return false
 
-	cooldown_timer -= duration_cooldown
+	cooldown_timer -= duration_cooldown[cooldown_index]
+	cooldown_index = (cooldown_index + 1) % duration_cooldown.size()
 	return true
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Player:
+		is_active = true
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body is Player:
+		is_active = false

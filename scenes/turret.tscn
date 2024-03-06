@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://duc6rcag5hoel"]
+[gd_scene load_steps=8 format=3 uid="uid://duc6rcag5hoel"]
 
 [ext_resource type="Script" path="res://scenes/turret.gd" id="1_yqyir"]
 [ext_resource type="Texture2D" uid="uid://bjnqe08rdrm1l" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_mxa1a"]
@@ -17,13 +17,16 @@ streams_count = 1
 stream_0/stream = ExtResource("3_ivfkx")
 stream_0/weight = 1.0
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_rgopd"]
+radius = 320.0
+
 [node name="Turret" type="StaticBody2D"]
 modulate = Color(0.419608, 0.603922, 0.819608, 1)
 collision_layer = 8
 collision_mask = 4
 script = ExtResource("1_yqyir")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="Collider" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_8a4s1")
 
@@ -37,3 +40,13 @@ region_rect = Rect2(0, 256, 16, 16)
 stream = SubResource("AudioStreamRandomizer_8xeaa")
 max_distance = 1000.0
 attenuation = 3.03143
+
+[node name="Area2D" type="Area2D" parent="."]
+modulate = Color(1, 1, 1, 0.247059)
+collision_mask = 4
+
+[node name="Sensor" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_rgopd")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
