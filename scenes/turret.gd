@@ -34,6 +34,7 @@ var firing_lines: int = 0
 var mode: Mode = Mode.Startup
 var delay_timer: float = 0.0
 var cooldown_timer: float = 0.0
+var is_active: bool = false
 
 func _ready() -> void:
 	var parent: Node = get_parent()
@@ -52,7 +53,7 @@ func _process(delta: float) -> void:
 	if mode == Mode.Startup:
 		mode = process_startup(delta)
 
-	if mode == Mode.Cycle and process_cycle(delta):
+	if mode == Mode.Cycle and process_cycle(delta) and is_active:
 		for i: int in range(16):
 			if (firing_lines >> i) & 1:
 				shoot.emit(bullet_lifetime, Vector2.from_angle(i * -TAU/16), position, bullet_speed, bullet_polarity)
@@ -72,3 +73,11 @@ func process_cycle(delta: float) -> bool:
 
 	cooldown_timer -= duration_cooldown
 	return true
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Player:
+		is_active = true
+
+func _on_area_2d_body_exited(body: Node2D) -> void:
+	if body is Player:
+		is_active = false
