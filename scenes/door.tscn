@@ -19,8 +19,28 @@ shape = SubResource("RectangleShape2D_402v4")
 disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 texture_filter = 1
+texture = ExtResource("4_u3hih")
+region_enabled = true
+region_rect = Rect2(16, 64, 16, 16)
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 16)
+texture = ExtResource("4_u3hih")
+region_enabled = true
+region_rect = Rect2(16, 64, 16, 16)
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 32)
+texture = ExtResource("4_u3hih")
+region_enabled = true
+region_rect = Rect2(16, 64, 16, 16)
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 48)
 texture = ExtResource("4_u3hih")
 region_enabled = true
 region_rect = Rect2(16, 64, 16, 16)
