@@ -4,18 +4,11 @@ class_name Turret
 
 ## Remember to connect this signal to whatever parent node this is under.
 ## Preferably a TurretController.
-signal shoot(lifetime: float, direction: Vector2, location: Vector2, speed: float)
+signal shoot(lifetime: float, direction: Vector2, location: Vector2, speed: float, polarity: Enums.Polarity)
 
 enum Mode {
 	Startup,
 	Cycle,
-}
-
-enum Facing {
-	Up,
-	Down,
-	Left,
-	Right,
 }
 
 @export_group("Durations", "duration_")
