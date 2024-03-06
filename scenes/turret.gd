@@ -40,7 +40,7 @@ func _ready() -> void:
 	while parent != null and !parent.has_method("_on_turret_shoot"):
 		parent = parent.get_parent()
 
-	assert(parent.has_method("_on_turret_shoot"), "Turrets must have an ancestor with a _on_turret_shoot method")
+	assert(parent.has_method("_on_turret_shoot"), "Turrets must have an ancestor with a _on_turret_shoot method, like level.gd")
 
 	# NOTE - srenshaw - I don't like hardcoding the type info here, but I don't
 	#  know how else to get the wanted Callable.
