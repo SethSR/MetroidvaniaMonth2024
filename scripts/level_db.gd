@@ -32,19 +32,10 @@ func _on_door_entered(door: Door) -> void:
 		door.open()
 		other_door.open()
 
-		# door = p:(-200,-120) gp:(328,-184)
-		# next_level = p:gp:(-248,-72)
-		# other_door = p:(200, -376) gp:(-48,-448)
-
-		# door.gp - other_door.gp = (376, 264)
-		# next_level.p + (376, 264) = (128,192)
-		# other_door.gp = (128,192) + other_door.p = (328,-184)
-
 		next_level.position += door.global_position - other_door.global_position
-		print(door.connection)
 		match door.connection:
 			0: next_level.position.y -= 16
-			1: next_level.position.y += 16 # okay
+			1: next_level.position.y += 16
 			2: next_level.position.x -= 16
 			3: next_level.position.x += 16
 
