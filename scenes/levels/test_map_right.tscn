@@ -19,14 +19,12 @@ layer_0/tile_data = PackedInt32Array(589812, 720897, 5, 589813, 720897, 5, 58981
 [node name="Turret" parent="." instance=ExtResource("3_tvq3d")]
 position = Vector2(184, 72)
 rotation = -1.5708
-duration_cooldown = 0.5
 bullet_lifetime = 1.0
 firing_lines = 256
 
 [node name="Turret2" parent="." instance=ExtResource("3_tvq3d")]
 position = Vector2(184, -56)
 rotation = -1.5708
-duration_cooldown = 0.5
 bullet_lifetime = 1.0
 firing_lines = 256
 
