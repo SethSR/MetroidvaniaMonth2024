@@ -433,13 +433,12 @@ func check_grapple_raycast() -> void:
 			grapple_wobble_tween = create_tween()
 			grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
-func receive_damage(projectile: Bullet) -> void:
-	if projectile.polarity == current_polarity:
+func receive_damage(polarity: Enums.Polarity, direction: Vector2) -> void:
+	if polarity == current_polarity:
 		return
-	print("received damage")
 	stunned_this_frame = true
-	velocity.x = -1.0 * STUN_HORIZONTAL_KNOCKBACK if facing_direction == Direction.RIGHT else STUN_HORIZONTAL_KNOCKBACK
-	velocity.y = STUN_VERTICAL_KNOCKBACK
+	velocity.x = -1.0 * STUN_HORIZONTAL_KNOCKBACK if direction.x < 0 else STUN_HORIZONTAL_KNOCKBACK
+	velocity.y = -1.0 * STUN_VERTICAL_KNOCKBACK if direction.y > 0 else STUN_VERTICAL_KNOCKBACK
 	stun_timer = STUN_DURATION
 
 func update_polarity(delta: float) -> void:
@@ -490,3 +489,7 @@ func _physics_process(delta: float) -> void:
 		if coll_obj is Door:
 			var door: Door = coll_obj as Door;
 			door.on_player_collision()
+		elif coll_obj is BulletLaser:
+			var b_laser: BulletLaser = coll_obj as BulletLaser
+			var dir: Vector2 = Vector2.RIGHT if b_laser.global_position.x < global_position.x else Vector2.LEFT
+			receive_damage(b_laser.polarity, dir)

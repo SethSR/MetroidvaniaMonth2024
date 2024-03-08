@@ -23,5 +23,4 @@ func _physics_process(delta: float) -> void:
 	queue_free()
 	var player: Player = coll.get_collider() as Player
 	if player != null:
-		print("collision with: ", player)
-		player.receive_damage(self)
+		player.receive_damage(polarity, global_position.direction_to(player.global_position))
