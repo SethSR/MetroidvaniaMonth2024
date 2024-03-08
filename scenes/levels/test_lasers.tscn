@@ -17,6 +17,7 @@ layer_0/tile_data = PackedInt32Array(-196617, 720897, 11, -196616, 720897, 11, -
 [node name="Laser" parent="." instance=ExtResource("3_7gcu8")]
 position = Vector2(80, -40)
 rotation = 3.14159
+duration_cooldown = Array[Vector2]([Vector2(1, 0.25)])
 
 [node name="Door" parent="." instance=ExtResource("4_n2u5u")]
 position = Vector2(-152, 56)

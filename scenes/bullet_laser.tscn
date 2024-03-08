@@ -1,0 +1,26 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjl4bqawdaf25"]
+
+[ext_resource type="Script" path="res://scenes/bullet_laser.gd" id="1_nqs0c"]
+[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/platformer_atlas_trans.tres" id="2_rgn26"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vtbjl"]
+size = Vector2(16, 16)
+
+[node name="BulletLaser" type="StaticBody2D"]
+collision_layer = 16
+collision_mask = 4
+script = ExtResource("1_nqs0c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_vtbjl")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_rgn26")
+region_enabled = true
+region_rect = Rect2(80, 256, 16, 16)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
