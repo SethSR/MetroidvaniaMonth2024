@@ -402,7 +402,7 @@ func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 		coyote_timer = WALKING_COYOTE_TIME_DURATION
 
 func check_grapple_raycast() -> void:
-	var raycast_target: Vector2 = position
+	var raycast_target: Vector2 = global_position
 	raycast_target.x = raycast_target.x + GRAPPLE_LENGTH if is_facing_right() else raycast_target.x - GRAPPLE_LENGTH
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 
@@ -412,10 +412,10 @@ func check_grapple_raycast() -> void:
 
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 	query.shape = trace_shape
-	query.motion = raycast_target - position
+	query.motion = raycast_target - global_position
 	query.collision_mask = 2
 	query.exclude = [self]
-	query.transform = Transform2D(0.0, position)
+	query.transform = Transform2D(0.0, global_position)
 
 	var result_arr: Array[Dictionary] = space_state.intersect_shape(query, 1)
 	if result_arr.size() > 0:
@@ -424,12 +424,12 @@ func check_grapple_raycast() -> void:
 			print("hit something with grapple!")
 			var collider: StaticBody2D = result.get("collider") as StaticBody2D
 			grapple_anchor_point = collider.global_position
-			grapple_current_length = abs(position.x - grapple_anchor_point.x)
+			grapple_current_length = abs(global_position.x - grapple_anchor_point.x)
 			grapple_direction = facing_direction
 			grappled_this_frame = true
 
 			grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
-			grapple_wobble_y = position.y
+			grapple_wobble_y = global_position.y
 			grapple_wobble_tween = create_tween()
 			grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 

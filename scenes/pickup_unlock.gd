@@ -6,8 +6,7 @@ class_name Pickup_Unlock
 @export var unlock_texture: Texture
 
 func _ready() -> void:
-	var texture: Sprite2D = $Sprite2D as Sprite2D
-	texture.texture = unlock_texture
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:

@@ -1,8 +1,8 @@
 [gd_scene load_steps=8 format=3 uid="uid://duc6rcag5hoel"]
 
 [ext_resource type="Script" path="res://scenes/turret.gd" id="1_yqyir"]
-[ext_resource type="Texture2D" uid="uid://bjnqe08rdrm1l" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_mxa1a"]
-[ext_resource type="AudioStream" uid="uid://bohvy70t1ojuv" path="res://assets/sounds/shot_quiet.wav" id="3_ivfkx"]
+[ext_resource type="Texture2D" uid="uid://2qdp0c2fhbqy" path="res://assets/kenney_1-bit-platformer/Tilemap/monochrome_tilemap_transparent_packed.png" id="2_mxa1a"]
+[ext_resource type="AudioStream" uid="uid://brjwhulrjlabr" path="res://assets/sounds/shot_quiet.wav" id="3_ivfkx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8a4s1"]
 size = Vector2(10, 10)
