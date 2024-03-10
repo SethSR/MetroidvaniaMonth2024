@@ -1,12 +1,13 @@
 [gd_scene load_steps=3 format=3 uid="uid://cx5wlfv55qdrx"]
 
 [ext_resource type="PackedScene" uid="uid://dfsw2b6a66csc" path="res://scenes/player_character.tscn" id="1_xgeu4"]
-[ext_resource type="PackedScene" uid="uid://bxx70ddg3vrb1" path="res://scenes/levels/room_grapple_unlock.tscn" id="2_w88xi"]
+[ext_resource type="PackedScene" uid="uid://d3p515ky8egi5" path="res://scenes/levels/room_central_column.tscn" id="2_m33u6"]
 
 [node name="Root" type="Node"]
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_xgeu4")]
-position = Vector2(78, -56)
+position = Vector2(104, -576)
+scale = Vector2(0.974851, 1.01449)
 slide_on_ceiling = false
 
-[node name="GrappleUnlock" parent="." instance=ExtResource("2_w88xi")]
+[node name="CentralColumn" parent="." instance=ExtResource("2_m33u6")]

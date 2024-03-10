@@ -27,7 +27,7 @@ enum Direction {LEFT, RIGHT}
 @export var JUMP_FORCE_DURATION: float = 0.19
 
 @export var GRAPPLE_LENGTH: float = 80.0
-@export var GRAPPLE_MAX_SPEED: float = 20.0
+@export var GRAPPLE_MAX_SPEED: float = 60.0
 @export var GRAPPLE_ACCELERATION: float = 300
 @export var GRAPPLE_WOBBLE_LENGTH: float = 1.5
 @export var GRAPPLE_TRACE_RADIUS: float = 6.0
@@ -140,7 +140,7 @@ func process_input() -> void:
 
 func update_debug_label() -> void:
 	var label: Label = $Label
-	label.text = "input_vector.x = " + str(input_vector.x) + "\nmove_left = " + str(Input.is_action_pressed("move_left")) + "\nmove_right = " + str(Input.is_action_pressed("move_right"))
+	label.text = ""
 
 func is_facing_right() -> bool:
 	return facing_direction == Direction.RIGHT

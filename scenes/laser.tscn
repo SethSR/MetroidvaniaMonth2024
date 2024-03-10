@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/laser.gd" id="1_mxure"]
 [ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/platformer_atlas_trans.tres" id="2_krya5"]
-[ext_resource type="AudioStream" uid="uid://bq2xxr2cublp5" path="res://assets/sounds/laser_heavy_fade_io.wav" id="3_jurgn"]
+[ext_resource type="AudioStream" uid="uid://84mjx25kx264" path="res://assets/sounds/laser_heavy_fade_io.wav" id="3_jurgn"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x8uek"]
 size = Vector2(16, 16)
