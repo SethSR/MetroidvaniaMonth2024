@@ -77,6 +77,7 @@ var progression: PlayerProgression = PlayerProgression.new()
 
 @onready var animation: AnimatedSprite2D = $PlayerSprite
 @onready var grapple_vfx: Sprite2D = $GrappleVfx
+@onready var sfx_jump: AudioStreamPlayer2D = $Jump
 
 func ready() -> void:
 	dash_timer = 0.0
@@ -160,6 +161,7 @@ func try_transition_to_jump() -> bool:
 		jump_charges -= 1
 		jump_timer = JUMP_FORCE_DURATION
 		velocity.y = JUMP_VELOCITY * -1.0
+		sfx_jump.play()
 		return true
 	else:
 		return false

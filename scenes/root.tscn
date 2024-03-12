@@ -6,7 +6,7 @@
 [node name="Root" type="Node"]
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("1_xgeu4")]
-position = Vector2(560, 48)
+position = Vector2(72, -40.0001)
 scale = Vector2(0.974851, 1.01449)
 slide_on_ceiling = false
 

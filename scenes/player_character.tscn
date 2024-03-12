@@ -131,3 +131,5 @@ scale = Vector2(0.400004, 0.439999)
 
 [node name="AudioListener2D" type="AudioListener2D" parent="."]
 current = true
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
