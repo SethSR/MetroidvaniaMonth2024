@@ -36,7 +36,7 @@ duration_delay = 0.2
 duration_cooldown = Array[float]([1.0, 0.5])
 bullet_speed = 120.0
 bullet_lifetime = 6.0
-firing_lines = 1280
+firing_lines = 2304
 
 [node name="Turret3" parent="." instance=ExtResource("4_awdo5")]
 position = Vector2(552, -480)
