@@ -90,4 +90,4 @@ func rest() -> void:
 
 func sfx_loop_stop() -> void:
 	sfx_loop.stop()
-	sfx_loop.volume_db = 0
+	sfx_loop.volume_db = -8

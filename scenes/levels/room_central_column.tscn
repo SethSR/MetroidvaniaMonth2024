@@ -54,11 +54,13 @@ connection = 2
 [node name="Laser" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(872, -648)
 rotation = 3.14159
+laser_polarity = 2
 
 [node name="Laser2" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(888, -648)
 rotation = 3.14159
 duration_delay = 1.0
+laser_polarity = 2
 
 [node name="Turret" parent="." instance=ExtResource("9_hpmlj")]
 position = Vector2(720, -768)
