@@ -17,9 +17,9 @@ const BULLET_LASER: PackedScene = preload("res://scenes/bullet_laser.tscn")
 #  moment.
 @export var duration_cooldown: Array[Vector2] = [Vector2(1.0, 1.0)]
 @export var laser_polarity: Enums.Polarity = Enums.Polarity.RED
+@export var laser_volume: float = 0
 
 @onready var sfx_loop: AudioStreamPlayer2D = $FadeInLoop
-@onready var sfx_out: AudioStreamPlayer2D = $FadeOut
 @onready var timer: Timer = $Timer
 @onready var bullets: Node = $Bullets
 @onready var ray: RayCast2D = $RayCast2D
@@ -33,6 +33,7 @@ func _ready() -> void:
 	assert(duration_delay != 0, get_parent().name + "::" + name + "::duration_delay cannot be 0")
 	for cd: Vector2 in duration_cooldown:
 		assert(cd.y >= 0.25, get_parent().name + "::" + name + " must have rest timers (duration_cooldown.y) above 0.25")
+		sfx_loop.volume_db = laser_volume
 	if duration_delay <= 0:
 		timer.start(0.01)
 	else:
@@ -84,10 +85,8 @@ func fire() -> void:
 func rest() -> void:
 	var tween: Tween = create_tween()
 	tween.tween_property(sfx_loop, "volume_db", -60, 0.2)
-	tween.tween_callback(sfx_loop_stop)
+	tween.tween_callback(func() -> void:
+		sfx_loop.stop()
+		sfx_loop.volume_db = laser_volume)
 	for child: Node in bullets.get_children():
 		(child as BulletLaser).deactivate()
-
-func sfx_loop_stop() -> void:
-	sfx_loop.stop()
-	sfx_loop.volume_db = -8
