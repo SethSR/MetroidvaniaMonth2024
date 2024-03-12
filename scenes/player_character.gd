@@ -79,6 +79,7 @@ var progression: PlayerProgression = PlayerProgression.new()
 @onready var grapple_vfx: Sprite2D = $GrappleVfx
 @onready var sfx_jump: AudioStreamPlayer2D = $Jump
 @onready var sfx_grapple: AudioStreamPlayer2D = $Grapple
+@onready var sfx_dash: AudioStreamPlayer2D = $Dash
 
 func ready() -> void:
 	dash_timer = 0.0
@@ -177,6 +178,7 @@ func try_transition_to_dash() -> bool:
 		velocity.x = DASH_SPEED * input_vector.x
 		velocity.y = 0.0
 		dash_current_direction = input_vector.x
+		sfx_dash.play()
 		return true
 	else:
 		return false
@@ -219,11 +221,9 @@ func end_grapple_state() -> void:
 	grapple_wobble_tween.kill()
 	var tween: Tween = create_tween()
 	tween.tween_property(sfx_grapple, "volume_db", -60, 0.2)
-	tween.tween_callback(sfx_grapple_stop)
-
-func sfx_grapple_stop() -> void:
+	tween.tween_callback(func() -> void:
 		sfx_grapple.stop()
-		sfx_grapple.volume_db = 0
+		sfx_grapple.volume_db = 0)
 
 func try_state_transitions() -> void:
 	if stunned_this_frame:
