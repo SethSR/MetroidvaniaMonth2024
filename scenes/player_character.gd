@@ -432,7 +432,6 @@ func check_grapple_raycast() -> void:
 	if result_arr.size() > 0:
 		var result: Dictionary = result_arr[0]
 		if !result.is_empty():
-			print("hit something with grapple!")
 			var collider: StaticBody2D = result.get("collider") as StaticBody2D
 			grapple_anchor_point = collider.global_position
 			grapple_current_length = abs(global_position.x - grapple_anchor_point.x)
