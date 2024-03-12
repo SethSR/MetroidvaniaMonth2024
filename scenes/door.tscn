@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cyxhiex35te0e"]
+[gd_scene load_steps=7 format=3 uid="uid://cyxhiex35te0e"]
 
 [ext_resource type="Script" path="res://scenes/door.gd" id="1_8uja4"]
+[ext_resource type="AudioStream" uid="uid://4gmdgayurf5w" path="res://assets/sounds/door.wav" id="3_sohuk"]
 [ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/platformer_atlas_trans.tres" id="4_u3hih"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_402v4"]
@@ -8,6 +9,12 @@ size = Vector2(16, 64)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jjsps"]
 radius = 96.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_jsyby"]
+random_pitch = 1.05
+streams_count = 1
+stream_0/stream = ExtResource("3_sohuk")
+stream_0/weight = 1.0
 
 [node name="Door" type="StaticBody2D"]
 collision_mask = 4
@@ -52,5 +59,9 @@ collision_mask = 4
 [node name="DoorSensor" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("CircleShape2D_jjsps")
 disabled = true
+
+[node name="Sfx" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_jsyby")
+volume_db = -5.0
 
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

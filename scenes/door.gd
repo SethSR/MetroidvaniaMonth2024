@@ -12,6 +12,7 @@ signal on_door_sensor_exited(door: Door)
 @onready var collider: CollisionShape2D = $DoorCollider
 @onready var sprites: Array[Sprite2D] = [$Sprite2D, $Sprite2D2, $Sprite2D3, $Sprite2D4]
 @onready var sensor: CollisionShape2D = $Area2D/DoorSensor
+@onready var sfx: AudioStreamPlayer2D = $Sfx
 
 var timer: float = 0.0
 var is_opening: bool = false
@@ -31,23 +32,29 @@ func _ready() -> void:
 	for sprite: Sprite2D in sprites:
 		sprite.visible = true
 
+func open_door(limit: float) -> void:
+	for i: int in range(4):
+		if sprites[i].visible and timer > (4 - i) * limit:
+			sprites[i].visible = false
+			sfx.play()
+
+func close_door(limit: float) -> void:
+	for i: int in range(4):
+		if !sprites[i].visible and timer > (i + 1) * limit:
+			sprites[i].visible = true
+			sfx.play()
+
 func _process(delta: float) -> void:
 	if is_opening:
 		timer += delta
-		sprites[3].visible = timer <= 0.1
-		sprites[2].visible = timer <= 0.2
-		sprites[1].visible = timer <= 0.3
-		sprites[0].visible = timer <= 0.4
+		open_door(0.1)
 		if timer > 0.4:
 			set_open(true)
 			is_opening = false
 			timer = 0.0
 	elif is_closing:
 		timer += delta
-		sprites[0].visible = timer > 0.1
-		sprites[1].visible = timer > 0.2
-		sprites[2].visible = timer > 0.3
-		sprites[3].visible = timer > 0.4
+		close_door(0.1)
 		if timer > 0.4:
 			is_closing = false
 			timer = 0.0
