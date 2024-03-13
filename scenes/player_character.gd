@@ -45,6 +45,8 @@ enum Direction {LEFT, RIGHT}
 
 @export var EXCESS_SPEED_FRICTION: float = 3.0
 
+@export var UNLOCK_SFX_VOLUME: float = -3.0
+
 var movement_state: MovementState = MovementState.FALLING
 var input_vector: Vector2 = Vector2.ZERO
 var wants_jump: bool = false
@@ -95,6 +97,7 @@ func ready() -> void:
 	sfx_jump.volume_db = JUMP_SFX_VOLUME
 	sfx_grapple.volume_db = GRAPPLE_SFX_VOLUME
 	sfx_dash.volume_db = DASH_SFX_VOLUME
+	sfx_unlock.volume_db = UNLOCK_SFX_VOLUME
 
 func on_pickup(unlock: Enums.UnlockType) -> void:
 	if !progression.has_unlock(unlock):

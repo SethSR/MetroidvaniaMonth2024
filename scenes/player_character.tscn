@@ -158,3 +158,4 @@ volume_db = -3.0
 
 [node name="Unlock" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_p8otw")
+volume_db = -3.0
