@@ -16,7 +16,7 @@ metadata/_edit_group_ = true
 shape = SubResource("CapsuleShape2D_vsplw")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture_filter = 1
+modulate = Color(0.588235, 0.396078, 0.760784, 1)
 texture = ExtResource("2_37w0n")
 region_enabled = true
 region_rect = Rect2(32, 64, 16, 16)
