@@ -21,16 +21,19 @@ enum Direction {LEFT, RIGHT}
 @export var DASH_SPEED: float = 310.0
 @export var DASH_GRAVITY: float = 50.0
 @export var DASH_FRICTION: float = 0.8
+@export var DASH_SFX_VOLUME: float = -3.0
 
 @export var JUMP_VELOCITY: float = 280.0
 @export var JUMP_GRAVITY: float = 980.0
 @export var JUMP_FORCE_DURATION: float = 0.19
+@export var JUMP_SFX_VOLUME: float = 0.0
 
 @export var GRAPPLE_LENGTH: float = 80.0
 @export var GRAPPLE_MAX_SPEED: float = 60.0
 @export var GRAPPLE_ACCELERATION: float = 300
 @export var GRAPPLE_WOBBLE_LENGTH: float = 1.5
 @export var GRAPPLE_TRACE_RADIUS: float = 6.0
+@export var GRAPPLE_SFX_VOLUME: float = -6.0
 
 @export var STUN_HORIZONTAL_KNOCKBACK: float = 140.0
 @export var STUN_VERTICAL_KNOCKBACK: float = -90.0
@@ -88,6 +91,9 @@ func ready() -> void:
 	dash_charges = get_max_dash_charges()
 	jump_charges = get_max_jump_charges()
 	movement_state = MovementState.FALLING
+	sfx_jump.volume_db = JUMP_SFX_VOLUME
+	sfx_grapple.volume_db = GRAPPLE_SFX_VOLUME
+	sfx_dash.volume_db = DASH_SFX_VOLUME
 
 func on_pickup(unlock: Enums.UnlockType) -> void:
 	if !progression.has_unlock(unlock):
@@ -223,7 +229,7 @@ func end_grapple_state() -> void:
 	tween.tween_property(sfx_grapple, "volume_db", -60, 0.2)
 	tween.tween_callback(func() -> void:
 		sfx_grapple.stop()
-		sfx_grapple.volume_db = 0)
+		sfx_grapple.volume_db = GRAPPLE_SFX_VOLUME)
 
 func try_state_transitions() -> void:
 	if stunned_this_frame:
