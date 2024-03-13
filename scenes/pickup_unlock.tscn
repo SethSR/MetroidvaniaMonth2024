@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dsm5ii2vmx675"]
 
 [ext_resource type="Script" path="res://scenes/pickup_unlock.gd" id="1_vta7x"]
-[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/kenney_1-bit-platformer/Tilemap/platformer_tilemap_trans.tres" id="2_37w0n"]
+[ext_resource type="Texture2D" uid="uid://cwhdpqbtqtt8q" path="res://assets/platformer_atlas_trans.tres" id="2_37w0n"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vsplw"]
 radius = 5.0

@@ -83,6 +83,7 @@ var progression: PlayerProgression = PlayerProgression.new()
 @onready var sfx_jump: AudioStreamPlayer2D = $Jump
 @onready var sfx_grapple: AudioStreamPlayer2D = $Grapple
 @onready var sfx_dash: AudioStreamPlayer2D = $Dash
+@onready var sfx_unlock: AudioStreamPlayer2D = $Unlock
 
 func ready() -> void:
 	dash_timer = 0.0
@@ -98,7 +99,8 @@ func ready() -> void:
 func on_pickup(unlock: Enums.UnlockType) -> void:
 	if !progression.has_unlock(unlock):
 		progression.unlock(unlock)
-		#todo: animation? sound?
+		sfx_unlock.play()
+		#todo: animation?
 
 #todo: get from unlocks system
 func get_max_dash_charges() -> int:
