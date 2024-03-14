@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://evi2gel4fa55"]
+[gd_scene load_steps=9 format=3 uid="uid://evi2gel4fa55"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_0o11b"]
 [ext_resource type="TileSet" uid="uid://b1n0xst6lpm78" path="res://assets/platformer_tileset_trans.tres" id="1_qp0j8"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="5_ppm5c"]
 [ext_resource type="PackedScene" uid="uid://cyxhiex35te0e" path="res://scenes/door.tscn" id="6_j5ovt"]
 [ext_resource type="Resource" uid="uid://b54kv2wynugff" path="res://assets/doors/room_center_column_to_grapple_dash.tres" id="7_k1pgc"]
+[ext_resource type="Resource" uid="uid://buqs3ehmcs8op" path="res://assets/doors/room_grapple_dash_to_polarity_unlock.tres" id="8_dillq"]
 
 [node name="RoomGrappleDash" type="Node2D"]
 script = ExtResource("1_0o11b")
@@ -104,3 +105,9 @@ position = Vector2(-40, -104)
 next_level = "res://scenes/levels/room_central_column.tscn"
 door_link = ExtResource("7_k1pgc")
 connection = 2
+
+[node name="Door2" parent="." instance=ExtResource("6_j5ovt")]
+position = Vector2(1016, -104)
+next_level = "res://scenes/levels/room_polarity_unlock.tscn"
+door_link = ExtResource("8_dillq")
+connection = 3

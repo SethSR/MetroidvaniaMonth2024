@@ -21,8 +21,14 @@ var polarity: Enums.Polarity = Enums.Polarity.RED
 func _ready() -> void:
 	saved_pos = sprite.position
 	match polarity:
-		Enums.Polarity.RED:  modulate = Color.RED
-		Enums.Polarity.BLUE: modulate = Color.BLUE
+		Enums.Polarity.RED:
+			modulate = Color.RED
+			collision_layer = 0x10
+		Enums.Polarity.BLUE:
+			modulate = Color.BLUE
+			collision_layer = 0x20
+		Enums.Polarity.NONE:
+			collision_layer = 0x30
 
 func _on_timer_timeout() -> void:
 	match state:

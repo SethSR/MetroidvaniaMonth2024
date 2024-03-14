@@ -169,7 +169,8 @@ debug_unlock_polarity_2={
 2d_physics/layer_2="Grapple"
 2d_physics/layer_3="Player"
 2d_physics/layer_4="Enemy"
-2d_physics/layer_5="Damage"
+2d_physics/layer_5="RedPolarity"
+2d_physics/layer_6="BluePolarity"
 
 [rendering]
 
