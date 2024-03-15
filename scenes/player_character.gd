@@ -467,9 +467,11 @@ func update_polarity(delta: float) -> void:
 		if current_polarity == Enums.Polarity.BLUE:
 			current_polarity = Enums.Polarity.RED
 			animation.modulate = POLARITY_RED_TINT
+			collision_mask = 0b0010_1001
 		else:
 			current_polarity = Enums.Polarity.BLUE
 			animation.modulate = POLARITY_BLUE_TINT
+			collision_mask = 0b0001_1001
 
 	elif progression.has_unlock(Enums.UnlockType.POLARITY_1):
 		if polarity_timer > 0.0:
@@ -477,10 +479,12 @@ func update_polarity(delta: float) -> void:
 			if polarity_timer <= 0.0:
 				current_polarity = Enums.Polarity.NONE
 				animation.modulate = Color.WHITE
+				collision_mask = 0b0011_1001
 		elif current_polarity == Enums.Polarity.NONE and wants_polarity_change:
 			current_polarity = Enums.Polarity.RED
 			animation.modulate = POLARITY_RED_TINT
 			polarity_timer = SHIELD_DURATION
+			collision_mask = 0b0010_1001
 
 func _physics_process(delta: float) -> void:
 	update_polarity(delta)

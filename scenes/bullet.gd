@@ -10,6 +10,15 @@ var direction: Vector2 = Vector2.ZERO
 var life_timer: float = lifetime
 @export var polarity: Enums.Polarity = Enums.Polarity.RED
 
+func _ready() -> void:
+	match polarity:
+		Enums.Polarity.RED:
+			collision_layer = 0x10
+		Enums.Polarity.BLUE:
+			collision_layer = 0x20
+		Enums.Polarity.NONE:
+			collision_layer = 0x30
+
 func _process(delta: float) -> void:
 	life_timer -= delta
 	if life_timer < 0:
