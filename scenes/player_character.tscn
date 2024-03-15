@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://dfsw2b6a66csc"]
+[gd_scene load_steps=24 format=3 uid="uid://dfsw2b6a66csc"]
 
 [ext_resource type="Script" path="res://scenes/player_character.gd" id="1_tvi00"]
 [ext_resource type="Texture2D" uid="uid://c1j6a62dpfluy" path="res://sprites/roll.png" id="2_go6tt"]
@@ -8,6 +8,7 @@
 [ext_resource type="AudioStream" uid="uid://vokktv4njtdt" path="res://assets/sounds/grapple.wav" id="6_qkd3j"]
 [ext_resource type="AudioStream" uid="uid://wxuiktjldyvm" path="res://assets/sounds/dash.wav" id="7_hraqt"]
 [ext_resource type="AudioStream" uid="uid://pgo02m6w3erh" path="res://assets/sounds/unlock.wav" id="8_p8otw"]
+[ext_resource type="AudioStream" uid="uid://bd4duqgp12lnt" path="res://assets/sounds/bg1.ogg" id="9_0b44c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0s1jr"]
 size = Vector2(10, 13)
@@ -159,3 +160,7 @@ volume_db = -3.0
 [node name="Unlock" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("8_p8otw")
 volume_db = -3.0
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("9_0b44c")
+autoplay = true
