@@ -110,8 +110,11 @@ stream_0/weight = 1.0
 collision_layer = 4
 collision_mask = 57
 script = ExtResource("1_tvi00")
+GRAPPLE_SFX_VOLUME = -3.0
+SHIELD_DURATION = 1.5
 POLARITY_RED_TINT = Color(1, 0.462745, 0.580392, 1)
 POLARITY_BLUE_TINT = Color(0.666667, 0.941176, 1, 1)
+UNLOCK_SFX_VOLUME = -6.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 0.5)
@@ -151,7 +154,7 @@ stream = SubResource("AudioStreamRandomizer_p1jer")
 
 [node name="Grapple" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("6_qkd3j")
-volume_db = -6.0
+volume_db = -3.0
 
 [node name="Dash" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_ukgk6")
@@ -161,6 +164,7 @@ volume_db = -3.0
 stream = ExtResource("8_p8otw")
 volume_db = -3.0
 
-[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+[node name="BGM" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("9_0b44c")
+volume_db = -9.0
 autoplay = true
