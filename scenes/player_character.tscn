@@ -110,6 +110,7 @@ stream_0/weight = 1.0
 collision_layer = 4
 collision_mask = 57
 script = ExtResource("1_tvi00")
+GRAPPLE_TRACE_RADIUS = 8.0
 GRAPPLE_SFX_VOLUME = -3.0
 SHIELD_DURATION = 1.5
 POLARITY_RED_TINT = Color(1, 0.462745, 0.580392, 1)
@@ -122,6 +123,7 @@ shape = SubResource("RectangleShape2D_0s1jr")
 
 [node name="GrappleVfx" type="Sprite2D" parent="."]
 visible = false
+modulate = Color(0.262745, 0.878431, 0.27451, 1)
 texture_filter = 1
 texture_repeat = 2
 material = SubResource("ShaderMaterial_eoc0f")

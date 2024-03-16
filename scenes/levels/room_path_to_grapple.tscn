@@ -22,15 +22,19 @@ layer_0/tile_data = PackedInt32Array(14, 1048577, 5, 15, 1048577, 5, 16, 1048577
 
 [node name="GrappleTarget" parent="." instance=ExtResource("3_om4tp")]
 position = Vector2(857, -424)
+rotation = 1.5708
 
 [node name="GrappleTarget2" parent="." instance=ExtResource("3_om4tp")]
 position = Vector2(648, -440)
+rotation = 1.5708
 
 [node name="GrappleTarget3" parent="." instance=ExtResource("3_om4tp")]
 position = Vector2(473, -425)
+rotation = 1.5708
 
 [node name="GrappleTarget4" parent="." instance=ExtResource("3_om4tp")]
 position = Vector2(185, -487)
+rotation = 1.5708
 
 [node name="Turret" parent="." instance=ExtResource("4_ls3iu")]
 position = Vector2(384, -8)

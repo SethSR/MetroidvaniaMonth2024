@@ -65,6 +65,7 @@ firing_lines = 4096
 
 [node name="GrappleTarget" parent="." instance=ExtResource("3_ulsy6")]
 position = Vector2(8, -360)
+rotation = 1.5708
 
 [node name="Turret7" parent="." instance=ExtResource("4_awdo5")]
 position = Vector2(328, -280)

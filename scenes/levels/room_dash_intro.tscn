@@ -80,12 +80,15 @@ duration_cooldown = Array[Vector2]([Vector2(1, 3)])
 
 [node name="GrappleTarget" parent="." instance=ExtResource("5_kjrld")]
 position = Vector2(952, -136)
+rotation = -1.5708
 
 [node name="GrappleTarget2" parent="." instance=ExtResource("5_kjrld")]
 position = Vector2(840, -184)
+rotation = 1.5708
 
 [node name="GrappleTarget3" parent="." instance=ExtResource("5_kjrld")]
 position = Vector2(968, -312)
+rotation = -1.5708
 
 [node name="Door" parent="." instance=ExtResource("6_p4eqc")]
 position = Vector2(-40, -104)

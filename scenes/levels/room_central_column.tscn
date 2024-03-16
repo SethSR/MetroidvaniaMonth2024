@@ -36,15 +36,19 @@ connection = 3
 
 [node name="GrappleTarget" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(872, -440)
+rotation = 1.5708
 
 [node name="GrappleTarget2" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(696, -440)
+rotation = 1.5708
 
 [node name="GrappleTarget3" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(488, -344)
+rotation = 1.5708
 
 [node name="GrappleTarget4" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(392, -504)
+rotation = -1.5708
 
 [node name="Door3" parent="." instance=ExtResource("3_sdpxe")]
 position = Vector2(-40, -104)
@@ -85,9 +89,11 @@ firing_lines = 1024
 
 [node name="GrappleTarget5" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(312, -920)
+rotation = 1.5708
 
 [node name="GrappleTarget6" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(392, -824)
+rotation = 1.5708
 
 [node name="Turret4" parent="." instance=ExtResource("9_hpmlj")]
 position = Vector2(144, -744)
@@ -103,12 +109,15 @@ firing_lines = 10240
 
 [node name="GrappleTarget7" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(648, -664)
+rotation = -1.5708
 
 [node name="GrappleTarget8" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(200, -664)
+rotation = 1.5708
 
 [node name="GrappleTarget9" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(152, -632)
+rotation = -1.5708
 
 [node name="Door4" parent="." instance=ExtResource("3_sdpxe")]
 position = Vector2(-40, -616)
@@ -118,9 +127,11 @@ connection = 2
 
 [node name="GrappleTarget10" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(472, -1304)
+rotation = -1.5708
 
 [node name="GrappleTarget11" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(152, -1576)
+rotation = 1.5708
 
 [node name="Laser3" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(284, -1528)
@@ -133,6 +144,7 @@ duration_delay = 1.0
 
 [node name="GrappleTarget12" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(136, -1208)
+rotation = 1.5708
 
 [node name="Turret6" parent="." instance=ExtResource("9_hpmlj")]
 position = Vector2(448, -1480)
@@ -154,12 +166,15 @@ firing_lines = 4096
 
 [node name="GrappleTarget13" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(712, -1400)
+rotation = 1.5708
 
 [node name="GrappleTarget14" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(376, -984)
+rotation = -1.5708
 
 [node name="GrappleTarget15" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(712, -1352)
+rotation = 1.5708
 
 [node name="Laser5" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(408, -1216)
@@ -180,6 +195,7 @@ firing_lines = 160
 
 [node name="GrappleTarget16" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(856, -1336)
+rotation = 1.5708
 
 [node name="Door5" parent="." instance=ExtResource("3_sdpxe")]
 position = Vector2(1016, -1128)

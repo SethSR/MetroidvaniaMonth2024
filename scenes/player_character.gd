@@ -70,6 +70,7 @@ var grapple_wobble_timer: float = 0.0
 var grapple_wobble_y: float = 0.0
 var grapple_wobble_tween: Tween
 var grapple_direction: Direction = Direction.RIGHT
+var grapple_target: GrappleTarget = null
 
 var stun_timer: float = 0.0
 var polarity_timer: float = 0.0
@@ -230,6 +231,8 @@ func end_grapple_state() -> void:
 	grapple_current_length = 0.0
 	grapple_vfx.visible = false
 	grapple_wobble_tween.kill()
+	grapple_target.on_grapple(false)
+	grapple_target = null
 	var tween: Tween = create_tween()
 	tween.tween_property(sfx_grapple, "volume_db", -60, 0.2)
 	tween.tween_callback(func() -> void:
@@ -238,9 +241,9 @@ func end_grapple_state() -> void:
 
 func try_state_transitions() -> void:
 	if stunned_this_frame:
-		movement_state = MovementState.STUNNED
 		if movement_state == MovementState.GRAPPLE:
 			end_grapple_state()
+		movement_state = MovementState.STUNNED
 		return
 
 	match movement_state:
@@ -399,7 +402,7 @@ func update_animations(_delta: float) -> void:
 
 	var percent_max_speed: float = abs(velocity.x) / WALKING_MAX_SPEED #todo: this only applies to walking
 	animation.speed_scale = clamp(lerp(0.0, 1.0, percent_max_speed), 0.0, 1.0)
-	animation.flip_h = false if is_facing_right() else true
+	animation.flip_h = !is_facing_right()
 
 	if movement_state == MovementState.GRAPPLE:
 		grapple_vfx.region_rect.size.x = grapple_current_length
@@ -425,34 +428,47 @@ func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 
 func check_grapple_raycast() -> void:
 	var raycast_target: Vector2 = global_position
-	raycast_target.x = raycast_target.x + GRAPPLE_LENGTH if is_facing_right() else raycast_target.x - GRAPPLE_LENGTH
+	raycast_target.x += GRAPPLE_LENGTH if is_facing_right() else -GRAPPLE_LENGTH
 	var space_state: PhysicsDirectSpaceState2D = get_world_2d().direct_space_state
 
-	#var query: PhysicsRayQueryParameters2D = PhysicsRayQueryParameters2D.create(position, raycast_target, 2)
 	var trace_shape: CircleShape2D = CircleShape2D.new()
 	trace_shape.radius = GRAPPLE_TRACE_RADIUS
 
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 	query.shape = trace_shape
 	query.motion = raycast_target - global_position
-	query.collision_mask = 2
+	# NOTE - The mask collides with walls and grapple points, we'll ignore the
+	#  walls later
+	query.collision_mask = 3
 	query.exclude = [self]
 	query.transform = Transform2D(0.0, global_position)
 
 	var result_arr: Array[Dictionary] = space_state.intersect_shape(query, 1)
-	if result_arr.size() > 0:
-		var result: Dictionary = result_arr[0]
-		if !result.is_empty():
-			var collider: StaticBody2D = result.get("collider") as StaticBody2D
-			grapple_anchor_point = collider.global_position
-			grapple_current_length = abs(global_position.x - grapple_anchor_point.x)
-			grapple_direction = facing_direction
-			grappled_this_frame = true
+	if result_arr.size() <= 0:
+		return
 
-			grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
-			grapple_wobble_y = global_position.y
-			grapple_wobble_tween = create_tween()
-			grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+	var result: Dictionary = result_arr[0]
+	if result.is_empty():
+		return
+
+	var node: Node = result.get("collider")
+	if !(node is GrappleTarget):
+		return
+
+	grapple_target = node as GrappleTarget
+	if grapple_target.rotation_degrees > 0:
+		grapple_direction = Direction.LEFT
+	elif grapple_target.rotation_degrees < 0:
+		grapple_direction = Direction.RIGHT
+	grapple_target.on_grapple(true)
+	grapple_anchor_point = grapple_target.global_position
+	grapple_current_length = abs(global_position.x - grapple_anchor_point.x)
+	grappled_this_frame = true
+
+	grapple_wobble_timer = GRAPPLE_WOBBLE_LENGTH
+	grapple_wobble_y = global_position.y
+	grapple_wobble_tween = create_tween()
+	grapple_wobble_tween.tween_property(self, "grapple_wobble_y", grapple_anchor_point.y, GRAPPLE_WOBBLE_LENGTH).set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
 
 func receive_damage(polarity: Enums.Polarity, direction: Vector2) -> void:
 	if polarity == current_polarity:

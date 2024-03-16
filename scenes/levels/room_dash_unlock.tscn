@@ -21,6 +21,7 @@ layer_0/tile_data = PackedInt32Array(30, 720897, 9, 31, 720897, 9, 32, 720897, 9
 
 [node name="GrappleTarget" parent="." instance=ExtResource("3_3e7to")]
 position = Vector2(537, -793)
+rotation = -1.5708
 
 [node name="Laser" parent="." instance=ExtResource("4_lfmvk")]
 position = Vector2(568, -888)
@@ -38,6 +39,7 @@ position = Vector2(208, -304)
 
 [node name="GrappleTarget2" parent="." instance=ExtResource("3_3e7to")]
 position = Vector2(680, -376)
+rotation = 1.5708
 
 [node name="Turret" parent="." instance=ExtResource("6_lioii")]
 position = Vector2(840, -248)
@@ -102,9 +104,11 @@ rotation = 3.14159
 
 [node name="GrappleTarget3" parent="." instance=ExtResource("3_3e7to")]
 position = Vector2(616, -104)
+rotation = 1.5708
 
 [node name="GrappleTarget4" parent="." instance=ExtResource("3_3e7to")]
 position = Vector2(840, -104)
+rotation = 1.5708
 
 [node name="Turret7" parent="." instance=ExtResource("6_lioii")]
 position = Vector2(904, -8)

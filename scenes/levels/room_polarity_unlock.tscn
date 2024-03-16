@@ -62,18 +62,23 @@ duration_cooldown = Array[Vector2]([Vector2(0.8, 0.4)])
 
 [node name="GrappleTarget" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(248, -216)
+rotation = 1.5708
 
 [node name="GrappleTarget2" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(8, -344)
+rotation = 1.5708
 
 [node name="GrappleTarget3" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(376, -312)
+rotation = 1.5708
 
 [node name="GrappleTarget4" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(504, -312)
+rotation = -1.5708
 
 [node name="GrappleTarget5" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(472, -376)
+rotation = 1.5708
 
 [node name="Laser7" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(24, -200)
@@ -156,6 +161,7 @@ laser_polarity = 2
 
 [node name="GrappleTarget6" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(712, 120)
+rotation = -1.5708
 
 [node name="Laser14" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(648, 216)
@@ -210,6 +216,7 @@ firing_lines = 16
 
 [node name="GrappleTarget7" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(232, 264)
+rotation = -1.5708
 
 [node name="Laser17" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(168, 232)
@@ -218,6 +225,7 @@ duration_cooldown = Array[Vector2]([Vector2(2, 0.3)])
 
 [node name="GrappleTarget8" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(72, 264)
+rotation = 1.5708
 
 [node name="Laser18" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(56, 280)
@@ -238,3 +246,4 @@ duration_cooldown = Array[Vector2]([Vector2(0.5, 1.5)])
 
 [node name="GrappleTarget9" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(136, 328)
+rotation = -1.5708
