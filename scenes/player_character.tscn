@@ -1,14 +1,23 @@
-[gd_scene load_steps=24 format=3 uid="uid://dfsw2b6a66csc"]
+[gd_scene load_steps=33 format=3 uid="uid://dfsw2b6a66csc"]
 
 [ext_resource type="Script" path="res://scenes/player_character.gd" id="1_tvi00"]
 [ext_resource type="Texture2D" uid="uid://c1j6a62dpfluy" path="res://sprites/roll.png" id="2_go6tt"]
 [ext_resource type="Shader" path="res://scenes/player_character.gdshader" id="2_vv55q"]
 [ext_resource type="Texture2D" uid="uid://b76y8f5guboeo" path="res://sprites/grapple_beam.png" id="3_hfalq"]
-[ext_resource type="AudioStream" uid="uid://c2c7gjq366cgy" path="res://assets/sounds/jump2.wav" id="5_qa68j"]
-[ext_resource type="AudioStream" uid="uid://bqdilhfy5behw" path="res://assets/sounds/grapple.wav" id="6_qkd3j"]
-[ext_resource type="AudioStream" uid="uid://dikit2x03ffaa" path="res://assets/sounds/dash.wav" id="7_hraqt"]
-[ext_resource type="AudioStream" uid="uid://ctdp8xl7pe41q" path="res://assets/sounds/unlock.wav" id="8_p8otw"]
-[ext_resource type="AudioStream" uid="uid://dmf716cgyna21" path="res://assets/sounds/bg1.ogg" id="9_0b44c"]
+[ext_resource type="Texture2D" uid="uid://b17ktsfctak7r" path="res://assets/grapple_icon.tres" id="5_4ws0k"]
+[ext_resource type="AudioStream" uid="uid://c1y2snctifhjb" path="res://assets/sounds/jump2.wav" id="5_qa68j"]
+[ext_resource type="Texture2D" uid="uid://bpp6fxo4lobu4" path="res://assets/dash_icon.tres" id="6_o6wvt"]
+[ext_resource type="AudioStream" uid="uid://vokktv4njtdt" path="res://assets/sounds/grapple.wav" id="6_qkd3j"]
+[ext_resource type="AudioStream" uid="uid://wxuiktjldyvm" path="res://assets/sounds/dash.wav" id="7_hraqt"]
+[ext_resource type="Texture2D" uid="uid://dl23skigx5k1f" path="res://assets/grapple_key.tres" id="7_npwbm"]
+[ext_resource type="AudioStream" uid="uid://pgo02m6w3erh" path="res://assets/sounds/unlock.wav" id="8_p8otw"]
+[ext_resource type="AudioStream" uid="uid://bd4duqgp12lnt" path="res://assets/sounds/bg1.ogg" id="9_0b44c"]
+[ext_resource type="Texture2D" uid="uid://cof24meph4423" path="res://assets/grapple_btn.tres" id="9_8we5m"]
+[ext_resource type="Texture2D" uid="uid://bgo17lor37np7" path="res://assets/dash_key.tres" id="9_74dh2"]
+[ext_resource type="Texture2D" uid="uid://bhwdbt860q0co" path="res://assets/dash_btn.tres" id="10_8gksc"]
+[ext_resource type="Texture2D" uid="uid://kxrf5ghrpeax" path="res://assets/polarity_btn.tres" id="11_fwmhw"]
+[ext_resource type="Texture2D" uid="uid://4xta6vxoso55" path="res://assets/polarity_icon.tres" id="11_wuone"]
+[ext_resource type="Texture2D" uid="uid://dgw72mgi37nrf" path="res://assets/polarity_key.tres" id="12_dgyj6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0s1jr"]
 size = Vector2(10, 13)
@@ -140,6 +149,63 @@ metadata/_edit_lock_ = true
 offset = Vector2(0, -4)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="Camera2D"]
+
+[node name="GridContainer" type="VBoxContainer" parent="Camera2D/CanvasLayer"]
+anchors_preset = 9
+anchor_bottom = 1.0
+grow_vertical = 2
+
+[node name="Grapple" type="HBoxContainer" parent="Camera2D/CanvasLayer/GridContainer"]
+visible = false
+modulate = Color(0.384314, 0.788235, 0.333333, 1)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Grapple"]
+layout_mode = 2
+texture = ExtResource("5_4ws0k")
+
+[node name="Button" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Grapple"]
+layout_mode = 2
+texture = ExtResource("9_8we5m")
+
+[node name="Key" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Grapple"]
+layout_mode = 2
+texture = ExtResource("7_npwbm")
+
+[node name="Dash" type="HBoxContainer" parent="Camera2D/CanvasLayer/GridContainer"]
+visible = false
+modulate = Color(0.588235, 0.396078, 0.760784, 1)
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Dash"]
+layout_mode = 2
+texture = ExtResource("6_o6wvt")
+
+[node name="Button" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Dash"]
+layout_mode = 2
+texture = ExtResource("10_8gksc")
+
+[node name="Key" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Dash"]
+layout_mode = 2
+texture = ExtResource("9_74dh2")
+
+[node name="Polarity" type="HBoxContainer" parent="Camera2D/CanvasLayer/GridContainer"]
+visible = false
+layout_mode = 2
+
+[node name="Icon" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Polarity"]
+layout_mode = 2
+texture = ExtResource("11_wuone")
+
+[node name="Button" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Polarity"]
+layout_mode = 2
+texture = ExtResource("11_fwmhw")
+
+[node name="Key" type="TextureRect" parent="Camera2D/CanvasLayer/GridContainer/Polarity"]
+layout_mode = 2
+texture = ExtResource("12_dgyj6")
 
 [node name="Label" type="Label" parent="."]
 z_index = 3

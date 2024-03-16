@@ -87,6 +87,15 @@ var progression: PlayerProgression = PlayerProgression.new()
 @onready var sfx_grapple: AudioStreamPlayer2D = $Grapple
 @onready var sfx_dash: AudioStreamPlayer2D = $Dash
 @onready var sfx_unlock: AudioStreamPlayer2D = $Unlock
+@onready var dash_icon: HBoxContainer = $Camera2D/CanvasLayer/GridContainer/Dash
+@onready var grapple_icon: HBoxContainer = $Camera2D/CanvasLayer/GridContainer/Grapple
+@onready var polarity_icon: HBoxContainer = $Camera2D/CanvasLayer/GridContainer/Polarity
+@onready var unlock_ui: Dictionary = {
+	Enums.UnlockType.DASH: dash_icon,
+	Enums.UnlockType.GRAPPLE: grapple_icon,
+	Enums.UnlockType.POLARITY_1: polarity_icon,
+	Enums.UnlockType.POLARITY_2: polarity_icon,
+}
 
 func ready() -> void:
 	dash_timer = 0.0
@@ -103,7 +112,19 @@ func ready() -> void:
 func on_pickup(unlock: Enums.UnlockType) -> void:
 	if !progression.has_unlock(unlock):
 		progression.unlock(unlock)
+		unlock_ui[unlock].visible = true
 		sfx_unlock.play()
+		if unlock == Enums.UnlockType.POLARITY_1:
+			unlock_ui[unlock].modulate = Color.RED
+		elif unlock == Enums.UnlockType.POLARITY_2:
+			match current_polarity:
+				Enums.Polarity.RED:
+					unlock_ui[unlock].modulate = Color.BLUE
+				Enums.Polarity.BLUE:
+					unlock_ui[unlock].modulate = Color.RED
+				Enums.Polarity.NONE:
+					unlock_ui[unlock].modulate = Color.RED
+
 		#todo: animation?
 
 #todo: get from unlocks system
@@ -479,10 +500,12 @@ func update_polarity(delta: float) -> void:
 			current_polarity = Enums.Polarity.RED
 			animation.modulate = POLARITY_RED_TINT
 			collision_mask = 0b0010_1001
+			polarity_icon.modulate = Color.BLUE
 		else:
 			current_polarity = Enums.Polarity.BLUE
 			animation.modulate = POLARITY_BLUE_TINT
 			collision_mask = 0b0001_1001
+			polarity_icon.modulate = Color.RED
 
 	elif progression.has_unlock(Enums.UnlockType.POLARITY_1):
 		if polarity_timer > 0.0:
