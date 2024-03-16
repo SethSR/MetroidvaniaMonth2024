@@ -110,7 +110,6 @@ stream_0/weight = 1.0
 collision_layer = 4
 collision_mask = 57
 script = ExtResource("1_tvi00")
-GRAPPLE_TRACE_RADIUS = 8.0
 GRAPPLE_SFX_VOLUME = -3.0
 SHIELD_DURATION = 1.5
 POLARITY_RED_TINT = Color(1, 0.462745, 0.580392, 1)

@@ -443,19 +443,18 @@ func check_grapple_raycast() -> void:
 	query.exclude = [self]
 	query.transform = Transform2D(0.0, global_position)
 
-	var result_arr: Array[Dictionary] = space_state.intersect_shape(query, 1)
+	var result_arr: Array[Dictionary] = space_state.intersect_shape(query, 6)
 	if result_arr.size() <= 0:
 		return
 
-	var result: Dictionary = result_arr[0]
-	if result.is_empty():
+	for result: Dictionary in result_arr:
+		var node: Node = result.get("collider")
+		if node is GrappleTarget:
+			grapple_target = node as GrappleTarget
+			break
+	if grapple_target == null:
 		return
 
-	var node: Node = result.get("collider")
-	if !(node is GrappleTarget):
-		return
-
-	grapple_target = node as GrappleTarget
 	if grapple_target.rotation_degrees > 0:
 		grapple_direction = Direction.LEFT
 	elif grapple_target.rotation_degrees < 0:
