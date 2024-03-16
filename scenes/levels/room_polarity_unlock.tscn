@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cam3tuk7wuhr3"]
+[gd_scene load_steps=10 format=3 uid="uid://cam3tuk7wuhr3"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_sagxo"]
 [ext_resource type="TileSet" uid="uid://b1n0xst6lpm78" path="res://assets/platformer_tileset_trans.tres" id="2_rhd4d"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="6_2delx"]
 [ext_resource type="PackedScene" uid="uid://cyxhiex35te0e" path="res://scenes/door.tscn" id="7_fo7p1"]
 [ext_resource type="Resource" uid="uid://buqs3ehmcs8op" path="res://assets/doors/room_grapple_dash_to_polarity_unlock.tres" id="8_hxmy3"]
+[ext_resource type="Resource" uid="uid://68gsy06tf8ho" path="res://assets/doors/room_polarity_unlock_to_polarity_intro.tres" id="9_rgxm5"]
 
 [node name="RoomPolarityUnlock" type="Node2D"]
 script = ExtResource("1_sagxo")
@@ -189,10 +190,6 @@ bullet_speed = 100.0
 bullet_polarity = 2
 firing_lines = 10240
 
-[node name="Turret9" parent="." instance=ExtResource("6_2delx")]
-position = Vector2(328, 116)
-firing_lines = 10240
-
 [node name="Turret10" parent="." instance=ExtResource("6_2delx")]
 position = Vector2(216, 168)
 duration_delay = 0.5
@@ -247,3 +244,9 @@ duration_cooldown = Array[Vector2]([Vector2(0.5, 1.5)])
 [node name="GrappleTarget9" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(136, 328)
 rotation = -1.5708
+
+[node name="Door2" parent="." instance=ExtResource("7_fo7p1")]
+position = Vector2(-40, 392)
+next_level = "res://scenes/levels/room_polarity_intro.tscn"
+door_link = ExtResource("9_rgxm5")
+connection = 2

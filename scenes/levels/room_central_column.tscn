@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://d3p515ky8egi5"]
+[gd_scene load_steps=13 format=3 uid="uid://d3p515ky8egi5"]
 
 [ext_resource type="Script" path="res://scenes/level.gd" id="1_p8feg"]
 [ext_resource type="TileSet" uid="uid://b1n0xst6lpm78" path="res://assets/platformer_tileset_trans.tres" id="2_ayw7a"]
@@ -11,6 +11,7 @@
 [ext_resource type="PackedScene" uid="uid://duc6rcag5hoel" path="res://scenes/turret.tscn" id="9_hpmlj"]
 [ext_resource type="Resource" uid="uid://ctxe7lnkivrs6" path="res://assets/doors/room_center_column_to_grapple_turrets.tres" id="10_mp1ti"]
 [ext_resource type="Resource" uid="uid://b54kv2wynugff" path="res://assets/doors/room_center_column_to_grapple_dash.tres" id="11_1clvn"]
+[ext_resource type="Resource" uid="uid://dfu1rixgimmlp" path="res://assets/doors/room_polarity_intro_to_center_column.tres" id="12_f13fj"]
 
 [node name="CentralColumn" type="Node2D"]
 script = ExtResource("1_p8feg")
@@ -59,13 +60,11 @@ connection = 2
 [node name="Laser" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(872, -648)
 rotation = 3.14159
-laser_polarity = 2
 
 [node name="Laser2" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(888, -648)
 rotation = 3.14159
 duration_delay = 1.0
-laser_polarity = 2
 
 [node name="Turret" parent="." instance=ExtResource("9_hpmlj")]
 position = Vector2(720, -768)
@@ -201,4 +200,10 @@ rotation = 1.5708
 position = Vector2(1016, -1128)
 next_level = "res://scenes/levels/room_grapple_dash.tscn"
 door_link = ExtResource("11_1clvn")
+connection = 3
+
+[node name="Door6" parent="." instance=ExtResource("3_sdpxe")]
+position = Vector2(1016, -616)
+next_level = "res://scenes/levels/room_polarity_intro.tscn"
+door_link = ExtResource("12_f13fj")
 connection = 3

@@ -4,11 +4,11 @@
 [ext_resource type="Texture2D" uid="uid://c1j6a62dpfluy" path="res://sprites/roll.png" id="2_go6tt"]
 [ext_resource type="Shader" path="res://scenes/player_character.gdshader" id="2_vv55q"]
 [ext_resource type="Texture2D" uid="uid://b76y8f5guboeo" path="res://sprites/grapple_beam.png" id="3_hfalq"]
-[ext_resource type="AudioStream" uid="uid://c1y2snctifhjb" path="res://assets/sounds/jump2.wav" id="5_qa68j"]
-[ext_resource type="AudioStream" uid="uid://vokktv4njtdt" path="res://assets/sounds/grapple.wav" id="6_qkd3j"]
-[ext_resource type="AudioStream" uid="uid://wxuiktjldyvm" path="res://assets/sounds/dash.wav" id="7_hraqt"]
-[ext_resource type="AudioStream" uid="uid://pgo02m6w3erh" path="res://assets/sounds/unlock.wav" id="8_p8otw"]
-[ext_resource type="AudioStream" uid="uid://bd4duqgp12lnt" path="res://assets/sounds/bg1.ogg" id="9_0b44c"]
+[ext_resource type="AudioStream" uid="uid://c2c7gjq366cgy" path="res://assets/sounds/jump2.wav" id="5_qa68j"]
+[ext_resource type="AudioStream" uid="uid://bqdilhfy5behw" path="res://assets/sounds/grapple.wav" id="6_qkd3j"]
+[ext_resource type="AudioStream" uid="uid://dikit2x03ffaa" path="res://assets/sounds/dash.wav" id="7_hraqt"]
+[ext_resource type="AudioStream" uid="uid://ctdp8xl7pe41q" path="res://assets/sounds/unlock.wav" id="8_p8otw"]
+[ext_resource type="AudioStream" uid="uid://dmf716cgyna21" path="res://assets/sounds/bg1.ogg" id="9_0b44c"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0s1jr"]
 size = Vector2(10, 13)
@@ -138,7 +138,6 @@ metadata/_edit_lock_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 offset = Vector2(0, -4)
-zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 position_smoothing_speed = 7.0
 
