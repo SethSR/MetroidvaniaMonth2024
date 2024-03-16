@@ -344,7 +344,6 @@ func physics_jumping(delta: float) -> void:
 	if abs(velocity.x) > AIR_MAX_HORIZONTAL_SPEED:
 		apply_friction(EXCESS_SPEED_FRICTION)
 	apply_acceleration(delta, AIR_MAX_HORIZONTAL_SPEED, AIR_HORIZONTAL_ACCELERATION)
-	pass
 
 #todo
 func physics_stunned(delta: float) -> void:
@@ -414,9 +413,6 @@ func update_animations(_delta: float) -> void:
 			grapple_vfx.position.x = grapple_current_length / -2.0
 			grapple_vfx.flip_h = true
 		#todo: account for grapple wobble, keep beam fixed at anchor
-
-func update_sounds() -> void:
-	return
 
 func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 	if movement_state != MovementState.WALKING:
@@ -519,7 +515,6 @@ func _physics_process(delta: float) -> void:
 
 	update_timers(delta)
 	update_animations(delta)
-	update_sounds()
 
 	for i: int in get_slide_collision_count():
 		var coll: KinematicCollision2D = get_slide_collision(i)
