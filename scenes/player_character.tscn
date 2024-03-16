@@ -5,13 +5,13 @@
 [ext_resource type="Shader" path="res://scenes/player_character.gdshader" id="2_vv55q"]
 [ext_resource type="Texture2D" uid="uid://b76y8f5guboeo" path="res://sprites/grapple_beam.png" id="3_hfalq"]
 [ext_resource type="Texture2D" uid="uid://b17ktsfctak7r" path="res://assets/grapple_icon.tres" id="5_4ws0k"]
-[ext_resource type="AudioStream" uid="uid://c1y2snctifhjb" path="res://assets/sounds/jump2.wav" id="5_qa68j"]
+[ext_resource type="AudioStream" uid="uid://c2c7gjq366cgy" path="res://assets/sounds/jump2.wav" id="5_qa68j"]
 [ext_resource type="Texture2D" uid="uid://bpp6fxo4lobu4" path="res://assets/dash_icon.tres" id="6_o6wvt"]
-[ext_resource type="AudioStream" uid="uid://vokktv4njtdt" path="res://assets/sounds/grapple.wav" id="6_qkd3j"]
-[ext_resource type="AudioStream" uid="uid://wxuiktjldyvm" path="res://assets/sounds/dash.wav" id="7_hraqt"]
+[ext_resource type="AudioStream" uid="uid://bqdilhfy5behw" path="res://assets/sounds/grapple.wav" id="6_qkd3j"]
+[ext_resource type="AudioStream" uid="uid://dikit2x03ffaa" path="res://assets/sounds/dash.wav" id="7_hraqt"]
 [ext_resource type="Texture2D" uid="uid://dl23skigx5k1f" path="res://assets/grapple_key.tres" id="7_npwbm"]
-[ext_resource type="AudioStream" uid="uid://pgo02m6w3erh" path="res://assets/sounds/unlock.wav" id="8_p8otw"]
-[ext_resource type="AudioStream" uid="uid://bd4duqgp12lnt" path="res://assets/sounds/bg1.ogg" id="9_0b44c"]
+[ext_resource type="AudioStream" uid="uid://ctdp8xl7pe41q" path="res://assets/sounds/unlock.wav" id="8_p8otw"]
+[ext_resource type="AudioStream" uid="uid://dmf716cgyna21" path="res://assets/sounds/bg1.ogg" id="9_0b44c"]
 [ext_resource type="Texture2D" uid="uid://cof24meph4423" path="res://assets/grapple_btn.tres" id="9_8we5m"]
 [ext_resource type="Texture2D" uid="uid://bgo17lor37np7" path="res://assets/dash_key.tres" id="9_74dh2"]
 [ext_resource type="Texture2D" uid="uid://bhwdbt860q0co" path="res://assets/dash_btn.tres" id="10_8gksc"]
@@ -120,6 +120,7 @@ collision_layer = 4
 collision_mask = 57
 script = ExtResource("1_tvi00")
 GRAPPLE_SFX_VOLUME = -3.0
+STUN_DURATION = 0.4
 SHIELD_DURATION = 1.5
 POLARITY_RED_TINT = Color(1, 0.462745, 0.580392, 1)
 POLARITY_BLUE_TINT = Color(0.666667, 0.941176, 1, 1)
@@ -131,7 +132,7 @@ shape = SubResource("RectangleShape2D_0s1jr")
 
 [node name="GrappleVfx" type="Sprite2D" parent="."]
 visible = false
-modulate = Color(0.262745, 0.878431, 0.27451, 1)
+modulate = Color(0.462745, 0.839216, 0.498039, 1)
 texture_filter = 1
 texture_repeat = 2
 material = SubResource("ShaderMaterial_eoc0f")

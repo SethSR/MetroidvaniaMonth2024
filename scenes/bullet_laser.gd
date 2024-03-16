@@ -22,10 +22,10 @@ func _ready() -> void:
 	saved_pos = sprite.position
 	match polarity:
 		Enums.Polarity.RED:
-			modulate = Color.RED
+			modulate = Color.ORANGE_RED
 			collision_layer = 0x10
 		Enums.Polarity.BLUE:
-			modulate = Color.BLUE
+			modulate = Color.AQUA
 			collision_layer = 0x20
 		Enums.Polarity.NONE:
 			collision_layer = 0x30

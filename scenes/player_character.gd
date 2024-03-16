@@ -40,8 +40,8 @@ enum Direction {LEFT, RIGHT}
 @export var STUN_DURATION: float = 0.6
 
 @export var SHIELD_DURATION: float = 1.0
-@export var POLARITY_RED_TINT: Color = Color.PALE_VIOLET_RED
-@export var POLARITY_BLUE_TINT: Color = Color.SKY_BLUE
+@export var POLARITY_RED_TINT: Color = Color.ORANGE_RED
+@export var POLARITY_BLUE_TINT: Color = Color.AQUA
 
 @export var EXCESS_SPEED_FRICTION: float = 3.0
 

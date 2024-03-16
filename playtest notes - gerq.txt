@@ -1,0 +1,14 @@
+"I expected momentum to hold midair"
+Seems to have a little difficulty managing momentum
+Got to grapple unlock quickly, thinks the button is 5 not s
+MAstered grapple way faster than the first playtester
+Thinks the verticle pipes could be stood on
+Having some difficulty on the three grapples in the path to dash
+Likes the way i forced him to learn how to retract and extend grapple 
+Keeps forgetting that he needs to change direction to grapple, wasn't sure if it was required
+HAd some difficulty with the three horizontal lasers
+Assummed he couldn't go through the blue laser door
+Attenuation on the first laser in dash to central column should be a bit higher 
+CEnter column second floor, the two lasers alternating on the hanging platform, change the timing of the second one to be closer to the first
+Bullets sometimes push people into the correct spot, they haven't commented so i don't know if this is good bad or neutral
+Thinks getting stunned is awkward, mostly due to loss of control and unpredictable nature of being knocked around. This instead of being killed is still more forgiving, and likes the general idea. Says he thinks it might be made better if you kept some level of control during a stun, which I think is something we could explore in a future version of the game.

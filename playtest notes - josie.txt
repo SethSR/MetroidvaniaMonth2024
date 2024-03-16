@@ -1,0 +1,55 @@
+make vertical pipe grey
+first bullet section - hesitates and times jump
+tries walking inot walls if there looks like there's a dirt path inside of it
+"I love the soundtrack, gives the game a strange feeling"
+tries jumping into the grapple point, struggling to figure out button
+**maybe move grapple point closer to pickup platform
+keeps jumping into the grapple point, not pressing s
+"do the icons at the top left mean anything to you?" "I know i picked up a power up but I don't know how to use it"
+tries clicking the s icon
+"what does the third icon mean" "its an s, shield maybe?"
+I had to say to press the S button near the grapple point
+Doesn't have much difficulty getting through the first grapple tunnel 
+**remove the arrow in center column
+confronted the laser door before going left to dash unlock
+spent time trying to get through the laser door, seems determined to get through. trying to time his jump through it
+**try to make it more clear that it is unpassable
+****got through the laser door, fix this
+very determined to get past impassable stuff lmao
+grapple_to_dash_unlock - having first bits of difficulty at the three grapples
+tried jumping through hanging platform from below
+having difficulty getting through three horizontal lasers, distracted by new voice chat person
+**accidentally bumping into lasers above, increase vertical spacing? move first hanging platform to the right?
+got dash, kept trying to double jump up the wall
+often waits to figure out the pattern of things
+overshoots with dash
+"Oh my god there's some points in the game where I get bounced around like a pinball"
+having some difficulty in the dash intro three grapple climb
+"Oh! I'm back at the first part of the game"
+Trying to go back towards grapple unlock through top route - would be cool if we had optional unlock here
+Decided to not go back through, going back to center column
+Confused where to go in center column, isn't trying vertical path
+"I know i have to get through that hole but it's extremely precise" trying to go wrong way back to grapple unlock again "Oh my god I know i can do that" after 20 tries or so
+got through "i feel like i've been here before"
+30 minutes in, has grapple and dash. hasn't figured out to go up in the center column
+"I think im supposed to go through again" - started going through the grapple unlock path like normal. Went through all the way again, seems confused "WAit what? Oh, what? I'm so fucking confused" - hasn't gone back up to the second floor again
+Finally trying to go the correct path but struggling with the blue projectile jump. The grapple point being there seems to be confusing him more than helping. Really struggling with timing the jump. Keeps falling back to floor 1, and overshooting the first jump.
+Several minutes at this one jump
+Remove collision on 3x3 decorative piece
+A few times he's gotten stunned and tried to go through the projectile again as fast as possible and got into a stun cycle
+got stuck in the laser door going to floor 4, had to let him debug unlock polarity 1 to get unstuck
+Got to the two grapples to get to polarity unlock, but is struggling to get through the 1 tile hole
+rode the blue bullets in the next room on accident
+failed the last grapple jump in this room, fell all the way down
+Doesn't realize that he can extend the grapple past the hole to jump to the higher grapple, keeps standing in the 1 tile hole - nevermind, he did it right as i typed that :)
+overshot first jump in room_polarity_unlock
+seems scared to make the long jump through the laser and two projectiles
+failed to grab onto the grapple drop "oh my god, no."
+we took a break, but has been playing for about an hour
+compared this level to "i wanna be the guy" this room is far too punishing if you miss the multi grapple at the end
+"I have to be very very precise with how i use the hook [grapple] button"
+Figured out the polarity mechanic immediately, not struggling through the second half of polarity_unlock
+"sarah you made literally the most brutal game of all time" even though he hasn't actually had any difficulty here lolll
+Ok he's struggling a bit here, but the problem is that he's hitting framerate issues in polarity_intro, i might need to reduce the bullet counts and slow them down 
+blue should be brighter so that it is more noticeable among lots of red
+

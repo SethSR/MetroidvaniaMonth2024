@@ -20,6 +20,6 @@ func _on_turret_shoot(lifetime: float, direction: Vector2, location: Vector2, sp
 	bullet.direction = direction
 	bullet.position = location
 	bullet.polarity = polarity
-	bullet.modulate = Color.RED if polarity == Enums.Polarity.RED else Color.BLUE
+	bullet.modulate = Color.ORANGE_RED if polarity == Enums.Polarity.RED else Color.AQUA
 
 	add_child(bullet)
