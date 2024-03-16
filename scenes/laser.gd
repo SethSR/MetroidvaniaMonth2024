@@ -45,17 +45,21 @@ func _physics_process(_delta: float) -> void:
 	if point.length_squared() <= 0: return
 	var distance: float = global_position.distance_to(point)
 	@warning_ignore("narrowing_conversion")
-	num_tiles = (distance - 8) / 16
+	num_tiles = ceil((distance - 8) / 16)
 	assert(num_tiles > 0, "Unable to calculate laser's firing line")
 	ray.queue_free()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body is Player:
 		is_active = true
+		if duration_cooldown[cooldown_index].x <= 0:
+			fire()
 
 func _on_area_2d_body_exited(body: Node2D) -> void:
 	if body is Player:
 		is_active = false
+		if duration_cooldown[cooldown_index].x <= 0:
+			rest()
 
 func _on_timer_timeout() -> void:
 	match mode:
