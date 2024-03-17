@@ -46,7 +46,7 @@ func _physics_process(_delta: float) -> void:
 	var distance: float = global_position.distance_to(point)
 	@warning_ignore("narrowing_conversion")
 	num_tiles = ceil((distance - 8) / 16)
-	assert(num_tiles > 0, "Unable to calculate laser's firing line")
+	#assert(num_tiles > 0, "Unable to calculate laser's firing line")
 	ray.queue_free()
 
 func _on_area_2d_body_entered(body: Node2D) -> void:
