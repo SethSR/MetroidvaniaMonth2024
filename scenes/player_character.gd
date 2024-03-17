@@ -443,6 +443,10 @@ func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 	if was_on_floor and !is_now_on_floor:
 		coyote_timer = WALKING_COYOTE_TIME_DURATION
 
+func get_tile_global_position(tm: TileMap, cell: RID) -> Vector2:
+	var coords: Vector2i = tm.get_coords_for_body_rid(cell)
+	return tm.to_global(tm.map_to_local(coords))
+
 func sort_raycast_results(a: Dictionary, b: Dictionary) -> bool:
 	var ac: Node2D = a.get("collider")
 	var bc: Node2D = b.get("collider")
@@ -451,25 +455,11 @@ func sort_raycast_results(a: Dictionary, b: Dictionary) -> bool:
 	elif ac == null:
 		return false
 	else:
-		var a_pos: Vector2 = ac.global_position
-		if ac is TileMap:
-			var tm: TileMap = ac as TileMap
-			var rid: RID = a.get("rid")
-			var coords: Vector2i = tm.get_coords_for_body_rid(rid)
-			a_pos = tm.to_global(tm.map_to_local(coords))
-
-		var b_pos: Vector2 = bc.global_position
-		if bc is TileMap:
-			var tm: TileMap = bc as TileMap
-			var rid: RID = b.get("rid")
-			var coords: Vector2i = tm.get_coords_for_body_rid(rid)
-			b_pos = tm.to_global(tm.map_to_local(coords))
-
+		var a_pos: Vector2 = get_tile_global_position(ac as TileMap, a.get("rid") as RID) if ac is TileMap else ac.global_position
+		var b_pos: Vector2 = get_tile_global_position(bc as TileMap, b.get("rid") as RID) if bc is TileMap else bc.global_position
 		if is_facing_right():
-			print(ac, "(", a_pos.x, ") ", bc, "(", b_pos.x, ")")
 			return a_pos.x < b_pos.x
 		else:
-			print(ac, "(", a_pos.x, ") ", bc, "(", b_pos.x, ")")
 			return a_pos.x > b_pos.x
 
 func check_grapple_raycast() -> void:
@@ -490,6 +480,23 @@ func check_grapple_raycast() -> void:
 	query.transform = Transform2D(0.0, global_position)
 
 	var result_arr: Array[Dictionary] = space_state.intersect_shape(query, 6)
+	if result_arr.size() <= 0:
+		return
+
+	var target_heights: Array = result_arr.filter(func(a: Dictionary) -> bool:
+		var ac: Node2D = a.get("collider")
+		return ac != null and ac is GrappleTarget
+	).map(func(a: Dictionary) -> float: return (a.get("collider") as Node2D).global_position.y)
+
+	result_arr = result_arr.filter(func(a: Dictionary) -> bool:
+		var ac: Node2D = a.get("collider")
+		if ac == null:
+			return false
+		var height: float = get_tile_global_position(ac as TileMap, a.get("rid") as RID).y if ac is TileMap else ac.global_position.y
+		return target_heights.any(func(t_height: float) -> bool: return t_height == height)
+	)
+
+	# Check if there's anything left
 	if result_arr.size() <= 0:
 		return
 
