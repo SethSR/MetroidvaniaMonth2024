@@ -443,35 +443,6 @@ func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 	if was_on_floor and !is_now_on_floor:
 		coyote_timer = WALKING_COYOTE_TIME_DURATION
 
-func sort_raycast_results(a: Dictionary, b: Dictionary) -> bool:
-	var ac: Node2D = a.get("collider")
-	var bc: Node2D = b.get("collider")
-	if bc == null:
-		return true
-	elif ac == null:
-		return false
-	else:
-		var a_pos: Vector2 = ac.global_position
-		if ac is TileMap:
-			var tm: TileMap = ac as TileMap
-			var rid: RID = a.get("rid")
-			var coords: Vector2i = tm.get_coords_for_body_rid(rid)
-			a_pos = tm.to_global(tm.map_to_local(coords))
-
-		var b_pos: Vector2 = bc.global_position
-		if bc is TileMap:
-			var tm: TileMap = bc as TileMap
-			var rid: RID = b.get("rid")
-			var coords: Vector2i = tm.get_coords_for_body_rid(rid)
-			b_pos = tm.to_global(tm.map_to_local(coords))
-
-		if is_facing_right():
-			print(ac, "(", a_pos.x, ") ", bc, "(", b_pos.x, ")")
-			return a_pos.x < b_pos.x
-		else:
-			print(ac, "(", a_pos.x, ") ", bc, "(", b_pos.x, ")")
-			return a_pos.x > b_pos.x
-
 func check_grapple_raycast() -> void:
 	var raycast_target: Vector2 = global_position
 	raycast_target.x += GRAPPLE_LENGTH if is_facing_right() else -GRAPPLE_LENGTH
@@ -493,8 +464,18 @@ func check_grapple_raycast() -> void:
 	if result_arr.size() <= 0:
 		return
 
-	# Sort the results so the first item is always the nearest tile or object
-	result_arr.sort_custom(sort_raycast_results)
+	# Sort the results so the first item is always the nearest tile
+	result_arr.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var ac: Node2D = a.get("collider")
+		var bc: Node2D = b.get("collider")
+		if bc == null:
+			return true
+		elif ac == null:
+			return false
+		elif is_facing_right():
+			return ac.global_position.x < bc.global_position.x
+		else:
+			return ac.global_position.x > bc.global_position.x)
 
 	var node: Node = result_arr[0].get("collider")
 	if node is GrappleTarget:
