@@ -74,7 +74,7 @@ func _on_timer_timeout() -> void:
 				timer.paused = true
 		Mode.CycleFiring:
 			mode = Mode.CycleResting
-			if is_active or bullets.get_child_count() > 0:
+			if !is_active or bullets.get_child_count() > 0:
 				rest()
 			timer.start(duration_cooldown[cooldown_index].y)
 
