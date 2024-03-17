@@ -440,7 +440,7 @@ func update_coyote_time(was_on_floor: bool, is_now_on_floor: bool) -> void:
 		coyote_timer = 0.0
 		return
 
-	if was_on_floor == true and is_now_on_floor == false:
+	if was_on_floor and !is_now_on_floor:
 		coyote_timer = WALKING_COYOTE_TIME_DURATION
 
 func check_grapple_raycast() -> void:
@@ -464,12 +464,24 @@ func check_grapple_raycast() -> void:
 	if result_arr.size() <= 0:
 		return
 
-	for result: Dictionary in result_arr:
-		var node: Node = result.get("collider")
-		if node is GrappleTarget:
-			grapple_target = node as GrappleTarget
-			break
-	if grapple_target == null:
+	# Sort the results so the first item is always the nearest grapple-target
+	result_arr.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
+		var ac: Node2D = a.get("collider")
+		var bc: Node2D = b.get("collider")
+		if bc == null or !(bc is GrappleTarget):
+			return true
+		elif ac == null or !(ac is GrappleTarget):
+			return false
+		else:
+			if is_facing_right():
+				return ac.global_position.x < bc.global_position.x
+			else:
+				return ac.global_position.x > bc.global_position.x)
+
+	var node: Node = result_arr[0].get("collider")
+	if node is GrappleTarget:
+		grapple_target = node as GrappleTarget
+	else:
 		return
 
 	if grapple_target.rotation_degrees > 0:
