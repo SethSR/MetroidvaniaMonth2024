@@ -84,7 +84,7 @@ func fire() -> void:
 		var bullet: BulletLaser = BULLET_LASER.instantiate()
 		bullet.position = Vector2(0, -16 * (i + 1))
 		bullet.polarity = laser_polarity
-		bullets.add_child(bullet)
+		bullets.call_deferred("add_child", bullet)
 
 func rest() -> void:
 	var tween: Tween = create_tween()
