@@ -26,12 +26,14 @@ rotation = -1.5708
 [node name="Laser" parent="." instance=ExtResource("4_lfmvk")]
 position = Vector2(568, -888)
 rotation = 3.14159
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 laser_polarity = 2
 
 [node name="Laser2" parent="." instance=ExtResource("4_lfmvk")]
 position = Vector2(584, -888)
 rotation = 3.14159
 duration_delay = 1.0
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 laser_polarity = 2
 
 [node name="DashUnlock" parent="." instance=ExtResource("5_luowk")]

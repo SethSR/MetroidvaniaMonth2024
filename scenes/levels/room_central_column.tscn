@@ -122,11 +122,13 @@ rotation = 1.5708
 [node name="Laser3" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(284, -1528)
 rotation = 4.71239
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 
 [node name="Laser4" parent="." instance=ExtResource("8_1sn3n")]
 position = Vector2(284, -1544)
 rotation = 4.71239
 duration_delay = 1.0
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 
 [node name="GrappleTarget12" parent="." instance=ExtResource("6_il3o5")]
 position = Vector2(136, -1208)
@@ -194,11 +196,6 @@ position = Vector2(1016, -616)
 next_level = "res://scenes/levels/room_polarity_intro.tscn"
 door_link = ExtResource("12_f13fj")
 connection = 3
-
-[node name="Turret10" parent="." instance=ExtResource("9_hpmlj")]
-position = Vector2(888, -648)
-duration_cooldown = Array[float]([0.1])
-firing_lines = 4096
 
 [node name="Turret11" parent="." instance=ExtResource("9_hpmlj")]
 position = Vector2(760, -1624)
@@ -379,3 +376,8 @@ duration_cooldown = Array[Vector2]([Vector2(2, 1)])
 position = Vector2(776, -1848)
 rotation = 1.5708
 duration_cooldown = Array[Vector2]([Vector2(2, 1)])
+
+[node name="Laser20" parent="." instance=ExtResource("8_1sn3n")]
+position = Vector2(888, -648)
+rotation = 3.14159
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])

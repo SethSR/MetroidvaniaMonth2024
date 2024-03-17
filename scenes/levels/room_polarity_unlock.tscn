@@ -23,21 +23,21 @@ layer_0/tile_data = PackedInt32Array(0, 720897, 9, 1, 720897, 9, 2, 720897, 9, 3
 [node name="Laser" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(664, -136)
 rotation = 3.14159
-duration_cooldown = Array[Vector2]([Vector2(0.8, 0.4)])
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 laser_polarity = 2
 
 [node name="Laser2" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(680, -136)
 rotation = 3.14159
 duration_delay = 0.4
-duration_cooldown = Array[Vector2]([Vector2(0.8, 0.4)])
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 laser_polarity = 2
 
 [node name="Laser3" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(696, -136)
 rotation = 3.14159
 duration_delay = 0.8
-duration_cooldown = Array[Vector2]([Vector2(0.8, 0.4)])
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 laser_polarity = 2
 
 [node name="Area2D" parent="." instance=ExtResource("4_mjwr7")]
@@ -47,19 +47,19 @@ unlock = 2
 [node name="Laser4" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(936, -136)
 rotation = 3.14159
-duration_cooldown = Array[Vector2]([Vector2(0.8, 0.4)])
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 
 [node name="Laser5" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(952, -136)
 rotation = 3.14159
 duration_delay = 0.4
-duration_cooldown = Array[Vector2]([Vector2(0.8, 0.4)])
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 
 [node name="Laser6" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(968, -136)
 rotation = 3.14159
 duration_delay = 0.8
-duration_cooldown = Array[Vector2]([Vector2(0.8, 0.4)])
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 
 [node name="GrappleTarget" parent="." instance=ExtResource("5_w007d")]
 position = Vector2(248, -216)
@@ -154,6 +154,7 @@ firing_lines = 4096
 position = Vector2(824, 120)
 rotation = 3.14159
 duration_delay = 1.0
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 
 [node name="Laser13" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(792, 120)
@@ -166,6 +167,7 @@ rotation = -1.5708
 
 [node name="Laser14" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(648, 216)
+duration_cooldown = Array[Vector2]([Vector2(0, 1)])
 
 [node name="Laser15" parent="." instance=ExtResource("3_pjr8s")]
 position = Vector2(664, 216)
