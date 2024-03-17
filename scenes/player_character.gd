@@ -579,5 +579,5 @@ func _physics_process(delta: float) -> void:
 			door.on_player_collision()
 		elif coll_obj is BulletLaser:
 			var b_laser: BulletLaser = coll_obj as BulletLaser
-			var dir: Vector2 = Vector2.RIGHT if b_laser.global_position.x < global_position.x else Vector2.LEFT
+			var dir: Vector2 = b_laser.global_position.direction_to(global_position)
 			receive_damage(b_laser.polarity, dir)
