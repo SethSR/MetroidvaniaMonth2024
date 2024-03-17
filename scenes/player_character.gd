@@ -530,7 +530,7 @@ func _physics_process(delta: float) -> void:
 
 	update_coyote_time(was_on_floor, is_on_floor())
 
-	if wants_grapple and movement_state != MovementState.GRAPPLE:
+	if progression.has_unlock(Enums.UnlockType.GRAPPLE) and wants_grapple and movement_state != MovementState.GRAPPLE:
 		check_grapple_raycast()
 
 	try_state_transitions()
