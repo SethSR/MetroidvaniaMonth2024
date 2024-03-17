@@ -464,19 +464,18 @@ func check_grapple_raycast() -> void:
 	if result_arr.size() <= 0:
 		return
 
-	# Sort the results so the first item is always the nearest grapple-target
+	# Sort the results so the first item is always the nearest tile
 	result_arr.sort_custom(func(a: Dictionary, b: Dictionary) -> bool:
 		var ac: Node2D = a.get("collider")
 		var bc: Node2D = b.get("collider")
-		if bc == null or !(bc is GrappleTarget):
+		if bc == null:
 			return true
-		elif ac == null or !(ac is GrappleTarget):
+		elif ac == null:
 			return false
+		elif is_facing_right():
+			return ac.global_position.x < bc.global_position.x
 		else:
-			if is_facing_right():
-				return ac.global_position.x < bc.global_position.x
-			else:
-				return ac.global_position.x > bc.global_position.x)
+			return ac.global_position.x > bc.global_position.x)
 
 	var node: Node = result_arr[0].get("collider")
 	if node is GrappleTarget:
